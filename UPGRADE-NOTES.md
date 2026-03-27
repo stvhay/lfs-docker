@@ -69,9 +69,18 @@ LFS 13.0 includes these new packages that we did NOT add (scope limited to versi
 ### Patches NOT Added
 - glibc-2.42-upstream_fixes-1.patch (mentioned in changelog, but not in official patches list; applies to glibc-2.42, not needed for glibc-2.43)
 
-## Build Instructions Not Updated
+## Build Instructions Updated
 
-This upgrade only changed versions. If builds fail, check the LFS 13.0 book for instruction changes:
+The following packages required build instruction changes beyond version updates:
+
+### Binutils (all passes)
+- Added `--enable-gprofng=no` (pass 1 and pass 2 only)
+- Added `--enable-new-dtags`
+- Added `--enable-default-hash-style=gnu`
+- System build: added `--sysconfdir=/etc`, removed `--enable-gold`
+- System build: updated cleanup to remove gprofng/sframe files
+
+If other builds fail, check the LFS 13.0 book for instruction changes:
 https://www.linuxfromscratch.org/lfs/view/13.0-systemd/
 
 ## Issues Found During Upgrade
