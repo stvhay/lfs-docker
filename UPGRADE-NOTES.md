@@ -36,23 +36,18 @@ These packages were in LFS 11.1 but removed in LFS 13.0:
 |-----|-----|
 | pkg-config-0.29.2 | pkgconf-2.5.1 |
 
-## New Packages Added (Required)
+## New Packages Added
 
-LFS 13.0 introduced packages that are required dependencies:
+LFS 13.0 introduced new packages that we added:
 
 - libxcrypt-4.5.2 (required by shadow - glibc 2.43 no longer includes libcrypt)
-
-## New Packages NOT Added
-
-LFS 13.0 includes these new packages that we did NOT add (scope limited to version updates):
-
-- flit-core-3.12.0
-- lz4-1.10.0
-- packaging-26.0
-- pcre2-10.47
-- setuptools-82.0.0
-- sqlite-3510200
-- wheel-0.46.3
+- lz4-1.10.0 (compression library)
+- pcre2-10.47 (regular expression library)
+- sqlite-3510200 (database library)
+- flit-core-3.12.0 (Python build dependency)
+- packaging-26.0 (Python build dependency)
+- wheel-0.46.3 (Python build dependency)
+- setuptools-82.0.0 (Python build dependency)
 
 ## Patch Changes
 
@@ -122,6 +117,48 @@ Affected packages:
 - Added `--with-{b,yes}crypt` for bcrypt/yescrypt support
 - Added `--without-libbsd` to use internal readpassphrase
 - Added `--disable-logind` since systemd isn't available yet during build
+
+### GCC (final build)
+- Added `sed -i 's/char [*]q/const &/' libgomp/affinity-fmt.c` for const correctness
+- Added `--enable-default-pie`, `--enable-default-ssp`, `--enable-host-pie` for security
+- Added `--disable-fixincludes`
+- Removed obsolete SIGSTKSZ sed command
+
+### Glibc
+- Added `--disable-nscd`
+- Changed `--enable-kernel=3.2` to `--enable-kernel=5.4`
+- Removed `--with-headers=/usr/include`
+
+### Python
+- Removed `--with-system-ffi` and `--with-ensurepip=yes`
+- Added `--without-static-libpython`
+
+### Ninja
+- Added `--verbose` to configure.py
+
+### Meson, MarkupSafe, Jinja2
+- Changed from deprecated `setup.py` to `pip3 wheel` build method
+
+### Kmod
+- Changed from autoconf to meson build system
+- Added `-D manpages=false`
+
+### Elfutils
+- Changed `make` to `make -C lib && make -C libelf` (builds only libelf)
+- Tests removed (fail with glibc-2.43)
+
+### Libffi
+- Removed `--disable-exec-static-tramp`
+
+### Systemd
+- Changed to `meson setup ..` syntax
+- Added `-D pamconfdir=no`, `-D dev-kvm-mode=0660`, `-D nobody-group=nogroup`
+- Added `-D sysupdate=disabled`, `-D ukify=disabled`
+- Changed `-Dhomed=false` to `-D homed=disabled`
+- Changed `-Dman=false` to `-D man=disabled`
+
+### Perl
+- Updated version paths from 5.34 to 5.42
 
 If other builds fail, check the LFS 13.0 book for instruction changes:
 https://www.linuxfromscratch.org/lfs/view/13.0-systemd/

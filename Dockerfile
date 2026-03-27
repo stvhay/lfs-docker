@@ -175,6 +175,8 @@ ADD --chmod=744 ${SOURCES_MIRROR:-https://www.kernel.org/pub/linux/utils/kernel/
 ADD --chmod=744 ${SOURCES_MIRROR:-https://www.greenwoodsoftware.com/less/}less-692.tar.gz .
 ADD --chmod=744 ${SOURCES_MIRROR:-https://www.kernel.org/pub/linux/libs/security/linux-privs/libcap2/}libcap-2.77.tar.xz .
 ADD --chmod=744 ${SOURCES_MIRROR:-https://github.com/libffi/libffi/releases/download/v3.5.2/}libffi-3.5.2.tar.gz .
+ADD --chmod=744 ${SOURCES_MIRROR:-https://pypi.org/packages/source/f/flit_core/}flit_core-3.12.0.tar.gz .
+ADD --chmod=744 ${SOURCES_MIRROR:-https://github.com/lz4/lz4/releases/download/v1.10.0/}lz4-1.10.0.tar.gz .
 ADD --chmod=744 ${SOURCES_MIRROR:-https://github.com/besser82/libxcrypt/releases/download/v4.5.2/}libxcrypt-4.5.2.tar.xz .
 ADD --chmod=744 ${SOURCES_MIRROR:-https://download.savannah.gnu.org/releases/libpipeline/}libpipeline-1.5.8.tar.gz .
 ADD --chmod=744 ${SOURCES_MIRROR:-https://ftpmirror.gnu.org/gnu/libtool/}libtool-2.5.4.tar.xz .
@@ -191,6 +193,8 @@ ADD --chmod=744 ${SOURCES_MIRROR:-https://invisible-mirror.net/archives/ncurses/
 ADD --chmod=744 ${SOURCES_MIRROR:-https://github.com/ninja-build/ninja/archive/v1.13.2/}ninja-1.13.2.tar.gz .
 ADD --chmod=744 ${SOURCES_MIRROR:-https://www.openssl.org/source/}openssl-3.6.1.tar.gz .
 ADD --chmod=744 ${SOURCES_MIRROR:-https://ftpmirror.gnu.org/gnu/patch/}patch-2.8.tar.xz .
+ADD --chmod=744 ${SOURCES_MIRROR:-https://pypi.org/packages/source/p/packaging/}packaging-26.0.tar.gz .
+ADD --chmod=744 ${SOURCES_MIRROR:-https://github.com/PCRE2Project/pcre2/releases/download/pcre2-10.47/}pcre2-10.47.tar.bz2 .
 ADD --chmod=744 ${SOURCES_MIRROR:-https://www.cpan.org/src/5.0/}perl-5.42.0.tar.xz .
 ADD --chmod=744 ${SOURCES_MIRROR:-https://distfiles.ariadne.space/pkgconf/}pkgconf-2.5.1.tar.xz .
 ADD --chmod=744 ${SOURCES_MIRROR:-https://sourceforge.net/projects/procps-ng/files/Production/}procps-ng-4.0.6.tar.xz .
@@ -199,7 +203,9 @@ ADD --chmod=744 ${SOURCES_MIRROR:-https://www.python.org/ftp/python/3.14.3/}Pyth
 ADD --chmod=744 ${SOURCES_MIRROR:-https://www.python.org/ftp/python/doc/3.14.3/}python-3.14.3-docs-html.tar.bz2 .
 ADD --chmod=744 ${SOURCES_MIRROR:-https://ftpmirror.gnu.org/gnu/readline/}readline-8.3.tar.gz .
 ADD --chmod=744 ${SOURCES_MIRROR:-https://ftpmirror.gnu.org/gnu/sed/}sed-4.9.tar.xz .
+ADD --chmod=744 ${SOURCES_MIRROR:-https://pypi.org/packages/source/s/setuptools/}setuptools-82.0.0.tar.gz .
 ADD --chmod=744 ${SOURCES_MIRROR:-https://github.com/shadow-maint/shadow/releases/download/4.19.3/}shadow-4.19.3.tar.xz .
+ADD --chmod=744 ${SOURCES_MIRROR:-https://www.sqlite.org/2025/}sqlite-autoconf-3510200.tar.gz .
 ADD --chmod=744 ${SOURCES_MIRROR:-https://github.com/systemd/systemd/archive/v259.1/}systemd-259.1.tar.gz .
 ADD --chmod=744 ${SOURCES_MIRROR:-https://anduin.linuxfromscratch.org/LFS/}systemd-man-pages-259.1.tar.xz .
 ADD --chmod=744 ${SOURCES_MIRROR:-https://ftpmirror.gnu.org/gnu/tar/}tar-1.35.tar.xz .
@@ -210,6 +216,7 @@ ADD --chmod=744 ${SOURCES_MIRROR:-https://ftpmirror.gnu.org/gnu/texinfo/}texinfo
 ADD --chmod=744 ${SOURCES_MIRROR:-https://www.iana.org/time-zones/repository/releases/}tzdata2025c.tar.gz .
 ADD --chmod=744 ${SOURCES_MIRROR:-https://www.kernel.org/pub/linux/utils/util-linux/v2.41/}util-linux-2.41.3.tar.xz .
 ADD --chmod=744 ${SOURCES_MIRROR:-https://github.com/vim/vim/archive/v9.2.0078/}vim-9.2.0078.tar.gz .
+ADD --chmod=744 ${SOURCES_MIRROR:-https://pypi.org/packages/source/w/wheel/}wheel-0.46.3.tar.gz .
 ADD --chmod=744 ${SOURCES_MIRROR:-https://cpan.metacpan.org/authors/id/T/TO/TODDR/}XML-Parser-2.47.tar.gz .
 ADD --chmod=744 ${SOURCES_MIRROR:-https://tukaani.org/xz/}xz-5.8.2.tar.xz .
 ADD --chmod=744 ${SOURCES_MIRROR:-https://zlib.net/}zlib-1.3.2.tar.xz .
@@ -917,7 +924,7 @@ RUN --mount=type=tmpfs \
     make install
 EOT
 
-# 7.10. Perl-5.34.0
+# 7.10. Perl-5.42.0
 RUN --mount=type=tmpfs \
     --mount=from=sources,source=perl-5.42.0.tar.xz,target=perl-5.42.0.tar.xz \
 <<'EOT' $SH
@@ -926,12 +933,12 @@ RUN --mount=type=tmpfs \
     sh Configure -des                               \
         -Dprefix=/usr                               \
         -Dvendorprefix=/usr                         \
-        -Dprivlib=/usr/lib/perl5/5.34/core_perl     \
-        -Darchlib=/usr/lib/perl5/5.34/core_perl     \
-        -Dsitelib=/usr/lib/perl5/5.34/site_perl     \
-        -Dsitearch=/usr/lib/perl5/5.34/site_perl    \
-        -Dvendorlib=/usr/lib/perl5/5.34/vendor_perl \
-        -Dvendorarch=/usr/lib/perl5/5.34/vendor_perl
+        -Dprivlib=/usr/lib/perl5/5.42/core_perl     \
+        -Darchlib=/usr/lib/perl5/5.42/core_perl     \
+        -Dsitelib=/usr/lib/perl5/5.42/site_perl     \
+        -Dsitearch=/usr/lib/perl5/5.42/site_perl    \
+        -Dvendorlib=/usr/lib/perl5/5.42/vendor_perl \
+        -Dvendorarch=/usr/lib/perl5/5.42/vendor_perl
     make
     make install
 EOT
@@ -942,9 +949,10 @@ RUN --mount=type=tmpfs \
 <<'EOT' $SH
     tar -xf Python-3.14.3.tar.xz
     cd Python-3.14.3
-    ./configure --prefix=/usr   \
-                --enable-shared \
-                --without-ensurepip
+    ./configure --prefix=/usr       \
+                --enable-shared     \
+                --without-ensurepip \
+                --without-static-libpython
     make
     make install
 EOT
@@ -1042,9 +1050,9 @@ RUN --mount=type=tmpfs \
     echo "rootsbindir=/usr/sbin" > configparms
     ../configure --prefix=/usr                   \
                  --disable-werror                \
-                 --enable-kernel=3.2             \
+                 --disable-nscd                  \
+                 --enable-kernel=5.4             \
                  --enable-stack-protector=strong \
-                 --with-headers=/usr/include     \
                  libc_cv_slibdir=/usr/lib
     make
     if $ENABLE_TESTS; then (make check || true); fi
@@ -1186,7 +1194,18 @@ RUN --mount=type=tmpfs \
     rm -fv /usr/lib/libz.a
 EOT
 
-# 8.9. Zstd-1.5.2
+# 8.9. Lz4-1.10.0
+RUN --mount=type=tmpfs \
+    --mount=from=sources,source=lz4-1.10.0.tar.gz,target=lz4-1.10.0.tar.gz \
+<<'EOT' $SH
+    tar -xf lz4-1.10.0.tar.gz
+    cd lz4-1.10.0
+    make BUILD_STATIC=no PREFIX=/usr
+    if $ENABLE_TESTS; then make -j1 check; fi
+    make BUILD_STATIC=no PREFIX=/usr install
+EOT
+
+# 8.10. Zstd-1.5.7
 RUN --mount=type=tmpfs \
     --mount=from=sources,source=zstd-1.5.7.tar.gz,target=zstd-1.5.7.tar.gz \
 <<'EOT' $SH
@@ -1227,13 +1246,34 @@ RUN --mount=type=tmpfs \
     install -v -m644 doc/*.{ps,pdf,html,dvi} /usr/share/doc/readline-8.3
 EOT
 
-# 8.12. M4-1.4.19
+# 8.12. M4-1.4.21
 RUN --mount=type=tmpfs \
     --mount=from=sources,source=m4-1.4.21.tar.xz,target=m4-1.4.21.tar.xz \
 <<'EOT' $SH
     tar -xf m4-1.4.21.tar.xz
     cd m4-1.4.21
     ./configure --prefix=/usr
+    make
+    if $ENABLE_TESTS; then make check; fi
+    make install
+EOT
+
+# 8.13. Pcre2-10.47
+RUN --mount=type=tmpfs \
+    --mount=from=sources,source=pcre2-10.47.tar.bz2,target=pcre2-10.47.tar.bz2 \
+<<'EOT' $SH
+    tar -xf pcre2-10.47.tar.bz2
+    cd pcre2-10.47
+    ./configure --prefix=/usr                       \
+                --docdir=/usr/share/doc/pcre2-10.47 \
+                --enable-unicode                    \
+                --enable-jit                        \
+                --enable-pcre2-16                   \
+                --enable-pcre2-32                   \
+                --enable-pcre2grep-libz             \
+                --enable-pcre2grep-libbz2           \
+                --enable-pcre2test-libreadline      \
+                --disable-static
     make
     if $ENABLE_TESTS; then make check; fi
     make install
@@ -1531,9 +1571,8 @@ RUN --mount=type=tmpfs \
 <<'EOT' $SH
     tar -xf gcc-15.2.0.tar.xz
     cd gcc-15.2.0
-    sed -e '/static.*SIGSTKSZ/d' \
-        -e 's/return kAltStackSize/return SIGSTKSZ * 4/' \
-        -i libsanitizer/sanitizer_common/sanitizer_posix_libcdep.cpp
+    # Fix for const correctness required by newer standards
+    sed -i 's/char [*]q/const &/' libgomp/affinity-fmt.c
     case $LFS_ARCH in
         x86_64)
             sed -e '/m64=/s/lib64/lib/' \
@@ -1546,12 +1585,16 @@ RUN --mount=type=tmpfs \
     esac
     mkdir -v build
     cd build
-    ../configure --prefix=/usr           \
-                LD=ld                    \
-                --enable-languages=c,c++ \
-                --disable-multilib       \
-                --disable-bootstrap      \
-                --with-system-zlib
+    ../configure --prefix=/usr            \
+                 LD=ld                     \
+                 --enable-languages=c,c++  \
+                 --enable-default-pie      \
+                 --enable-default-ssp      \
+                 --enable-host-pie         \
+                 --disable-multilib        \
+                 --disable-bootstrap       \
+                 --disable-fixincludes     \
+                 --with-system-zlib
     make
     if $ENABLE_TESTS; then \
         ulimit -s 32768
@@ -1796,12 +1839,12 @@ RUN --mount=type=tmpfs \
     sh Configure -des                                         \
                  -Dprefix=/usr                                \
                  -Dvendorprefix=/usr                          \
-                 -Dprivlib=/usr/lib/perl5/5.34/core_perl      \
-                 -Darchlib=/usr/lib/perl5/5.34/core_perl      \
-                 -Dsitelib=/usr/lib/perl5/5.34/site_perl      \
-                 -Dsitearch=/usr/lib/perl5/5.34/site_perl     \
-                 -Dvendorlib=/usr/lib/perl5/5.34/vendor_perl  \
-                 -Dvendorarch=/usr/lib/perl5/5.34/vendor_perl \
+                 -Dprivlib=/usr/lib/perl5/5.42/core_perl      \
+                 -Darchlib=/usr/lib/perl5/5.42/core_perl      \
+                 -Dsitelib=/usr/lib/perl5/5.42/site_perl      \
+                 -Dsitearch=/usr/lib/perl5/5.42/site_perl     \
+                 -Dvendorlib=/usr/lib/perl5/5.42/vendor_perl  \
+                 -Dvendorarch=/usr/lib/perl5/5.42/vendor_perl \
                  -Dman1dir=/usr/share/man/man1                \
                  -Dman3dir=/usr/share/man/man3                \
                  -Dpager="/usr/bin/less -isR"                 \
@@ -1882,37 +1925,36 @@ RUN --mount=type=tmpfs \
     cp -vfr doc/* /usr/share/doc/openssl-3.6.1
 EOT
 
-# 8.47. Kmod-29
+# 8.60. Kmod-34.2
 RUN --mount=type=tmpfs \
     --mount=from=sources,source=kmod-34.2.tar.xz,target=kmod-34.2.tar.xz \
 <<'EOT' $SH
     tar -xf kmod-34.2.tar.xz
     cd kmod-34.2
-    ./configure --prefix=/usr          \
-                --sysconfdir=/etc      \
-                --with-openssl         \
-                --with-xz              \
-                --with-zstd            \
-                --with-zlib
-    make
-    make install
+    mkdir -p build
+    cd       build
+    meson setup --prefix=/usr     \
+                --buildtype=release \
+                -D manpages=false
+    ninja
+    ninja install
     for target in depmod insmod modinfo modprobe rmmod; do \
         ln -sfv ../bin/kmod /usr/sbin/$target || exit 1; \
     done
     ln -sfv kmod /usr/bin/lsmod
 EOT
 
-# 8.48. Libelf from Elfutils-0.186
+# 8.50. Libelf from Elfutils-0.194
 RUN --mount=type=tmpfs \
     --mount=from=sources,source=elfutils-0.194.tar.bz2,target=elfutils-0.194.tar.bz2 \
 <<'EOT' $SH
     tar -xf elfutils-0.194.tar.bz2
     cd elfutils-0.194
-    ./configure --prefix=/usr                \
-                --disable-debuginfod         \
+    ./configure --prefix=/usr        \
+                --disable-debuginfod \
                 --enable-libdebuginfod=dummy
-    make
-    if $ENABLE_TESTS; then make check; fi
+    make -C lib
+    make -C libelf
     make -C libelf install
     install -vm644 config/libelf.pc /usr/lib/pkgconfig
     rm /usr/lib/libelf.a
@@ -1924,28 +1966,44 @@ RUN --mount=type=tmpfs \
 <<'EOT' $SH
     tar -xf libffi-3.5.2.tar.gz
     cd libffi-3.5.2
-    ./configure --prefix=/usr          \
-                --disable-static       \
-                --with-gcc-arch=native \
-                --disable-exec-static-tramp
+    ./configure --prefix=/usr    \
+                --disable-static \
+                --with-gcc-arch=native
     make
     if $ENABLE_TESTS; then make check; fi
     make install
 EOT
 
-# 8.50. Python-3.14.3
+# 8.52. Sqlite-3.51.0
+RUN --mount=type=tmpfs \
+    --mount=from=sources,source=sqlite-autoconf-3510200.tar.gz,target=sqlite-autoconf-3510200.tar.gz \
+<<'EOT' $SH
+    tar -xf sqlite-autoconf-3510200.tar.gz
+    cd sqlite-autoconf-3510200
+    ./configure --prefix=/usr     \
+                --disable-static  \
+                --enable-fts4     \
+                --enable-fts5     \
+                CPPFLAGS="-DSQLITE_ENABLE_COLUMN_METADATA=1 \
+                          -DSQLITE_ENABLE_UNLOCK_NOTIFY=1   \
+                          -DSQLITE_ENABLE_DBSTAT_VTAB=1     \
+                          -DSQLITE_SECURE_DELETE=1"
+    make
+    make install
+EOT
+
+# 8.53. Python-3.14.3
 RUN --mount=type=tmpfs \
     --mount=from=sources,source=Python-3.14.3.tar.xz,target=Python-3.14.3.tar.xz \
     --mount=from=sources,source=python-3.14.3-docs-html.tar.bz2,target=python-3.14.3-docs-html.tar.bz2 \
 <<'EOT' $SH
     tar -xf Python-3.14.3.tar.xz
     cd Python-3.14.3
-    ./configure --prefix=/usr        \
-                --enable-shared      \
-                --with-system-expat  \
-                --with-system-ffi    \
-                --with-ensurepip=yes \
-                --enable-optimizations
+    ./configure --prefix=/usr          \
+                --enable-shared        \
+                --with-system-expat    \
+                --enable-optimizations \
+                --without-static-libpython
     make
     make install
     install -v -dm755 /usr/share/doc/python-3.14.3/html
@@ -1969,7 +2027,7 @@ RUN --mount=type=tmpfs \
         if ( jobs != NULL ) j = atoi( jobs );\
         if ( j > 0 ) return j;\
         ' src/ninja.cc
-    python3 configure.py --bootstrap
+    python3 configure.py --bootstrap --verbose
     if $ENABLE_TESTS; then \
         ./ninja ninja_test
         ./ninja_test --gtest_filter=-SubprocessTest.SetWithLots; \
@@ -1979,15 +2037,56 @@ RUN --mount=type=tmpfs \
     install -vDm644 misc/zsh-completion  /usr/share/zsh/site-functions/_ninja
 EOT
 
-# 8.52. Meson-0.61.1
+# 8.54. Flit-Core-3.12.0
+RUN --mount=type=tmpfs \
+    --mount=from=sources,source=flit_core-3.12.0.tar.gz,target=flit_core-3.12.0.tar.gz \
+<<'EOT' $SH
+    tar -xf flit_core-3.12.0.tar.gz
+    cd flit_core-3.12.0
+    pip3 wheel -w dist --no-cache-dir --no-build-isolation --no-deps $PWD
+    pip3 install --no-index --find-links dist flit_core
+EOT
+
+# 8.55. Packaging-26.0
+RUN --mount=type=tmpfs \
+    --mount=from=sources,source=packaging-26.0.tar.gz,target=packaging-26.0.tar.gz \
+<<'EOT' $SH
+    tar -xf packaging-26.0.tar.gz
+    cd packaging-26.0
+    pip3 wheel -w dist --no-cache-dir --no-build-isolation --no-deps $PWD
+    pip3 install --no-index --find-links dist packaging
+EOT
+
+# 8.56. Wheel-0.46.3
+RUN --mount=type=tmpfs \
+    --mount=from=sources,source=wheel-0.46.3.tar.gz,target=wheel-0.46.3.tar.gz \
+<<'EOT' $SH
+    tar -xf wheel-0.46.3.tar.gz
+    cd wheel-0.46.3
+    pip3 wheel -w dist --no-cache-dir --no-build-isolation --no-deps $PWD
+    pip3 install --no-index --find-links dist wheel
+EOT
+
+# 8.57. Setuptools-82.0.0
+RUN --mount=type=tmpfs \
+    --mount=from=sources,source=setuptools-82.0.0.tar.gz,target=setuptools-82.0.0.tar.gz \
+<<'EOT' $SH
+    tar -xf setuptools-82.0.0.tar.gz
+    cd setuptools-82.0.0
+    pip3 wheel -w dist --no-cache-dir --no-build-isolation --no-deps $PWD
+    pip3 install --no-index --find-links dist setuptools
+EOT
+
+# 8.58. Ninja-1.13.2 is already above
+
+# 8.59. Meson-1.10.1
 RUN --mount=type=tmpfs \
     --mount=from=sources,source=meson-1.10.1.tar.gz,target=meson-1.10.1.tar.gz \
 <<'EOT' $SH
     tar -xf meson-1.10.1.tar.gz
     cd meson-1.10.1
-    python3 setup.py build
-    python3 setup.py install --root=dest
-    cp -rv dest/* /
+    pip3 wheel -w dist --no-cache-dir --no-build-isolation --no-deps $PWD
+    pip3 install --no-index --find-links dist meson
     install -vDm644 data/shell-completions/bash/meson /usr/share/bash-completion/completions/meson
     install -vDm644 data/shell-completions/zsh/_meson /usr/share/zsh/site-functions/_meson
 EOT
@@ -2260,23 +2359,24 @@ if (&term == "xterm") || (&term == "putty")
 endif
 EOT
 
-# 8.69. markupsafe-3.0.3
+# 8.76. MarkupSafe-3.0.3
 RUN --mount=type=tmpfs \
     --mount=from=sources,source=markupsafe-3.0.3.tar.gz,target=markupsafe-3.0.3.tar.gz \
 <<'EOT' $SH
     tar -xf markupsafe-3.0.3.tar.gz
     cd markupsafe-3.0.3
-    python3 setup.py build
-    python3 setup.py install --optimize=1
+    pip3 wheel -w dist --no-cache-dir --no-build-isolation --no-deps $PWD
+    pip3 install --no-index --find-links dist MarkupSafe
 EOT
 
-# 8.70. Jinja2-3.1.6
+# 8.77. Jinja2-3.1.6
 RUN --mount=type=tmpfs \
     --mount=from=sources,source=jinja2-3.1.6.tar.gz,target=jinja2-3.1.6.tar.gz \
 <<'EOT' $SH
     tar -xf jinja2-3.1.6.tar.gz
     cd jinja2-3.1.6
-    python3 setup.py install --optimize=1
+    pip3 wheel -w dist --no-cache-dir --no-build-isolation --no-deps $PWD
+    pip3 install --no-index --find-links dist Jinja2
 EOT
 
 # 8.71. Systemd-259.1
@@ -2290,24 +2390,24 @@ RUN --mount=type=tmpfs \
         -e 's/GROUP="sgx", //' rules.d/50-udev-default.rules.in
     mkdir -p build
     cd build
-    meson --prefix=/usr                 \
-          --sysconfdir=/etc             \
-          --localstatedir=/var          \
-          --buildtype=release           \
-          -Dblkid=true                  \
-          -Ddefault-dnssec=no           \
-          -Dfirstboot=false             \
-          -Dinstall-tests=false         \
-          -Dldconfig=false              \
-          -Dsysusers=false              \
-          -Db_lto=false                 \
-          -Drpmmacrosdir=no             \
-          -Dhomed=false                 \
-          -Duserdb=false                \
-          -Dman=false                   \
-          -Dmode=release                \
-          -Ddocdir=/usr/share/doc/systemd-259.1 \
-          ..
+    meson setup ..                  \
+          --prefix=/usr             \
+          --buildtype=release       \
+          -D default-dnssec=no      \
+          -D firstboot=false        \
+          -D install-tests=false    \
+          -D ldconfig=false         \
+          -D sysusers=false         \
+          -D rpmmacrosdir=no        \
+          -D homed=disabled         \
+          -D man=disabled           \
+          -D mode=release           \
+          -D pamconfdir=no          \
+          -D dev-kvm-mode=0660      \
+          -D nobody-group=nogroup   \
+          -D sysupdate=disabled     \
+          -D ukify=disabled         \
+          -D docdir=/usr/share/doc/systemd-259.1
     ninja
     ninja install
     tar -xf ../../systemd-man-pages-259.1.tar.xz --strip-components=1 -C /usr/share/man
