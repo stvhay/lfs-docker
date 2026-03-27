@@ -286,11 +286,14 @@ RUN --mount=type=tmpfs \
     cd binutils-2.46.0
     mkdir -v build
     cd build
-    ../configure --prefix=$LFS/tools \
-                 --with-sysroot=$LFS \
-                 --target=$LFS_TGT   \
-                 --disable-nls       \
-                 --disable-werror
+    ../configure --prefix=$LFS/tools       \
+                 --with-sysroot=$LFS       \
+                 --target=$LFS_TGT         \
+                 --disable-nls             \
+                 --enable-gprofng=no       \
+                 --disable-werror          \
+                 --enable-new-dtags        \
+                 --enable-default-hash-style=gnu
     make
     make install
 EOT
@@ -652,8 +655,11 @@ RUN --mount=type=tmpfs \
                  --host=$LFS_TGT            \
                  --disable-nls              \
                  --enable-shared            \
+                 --enable-gprofng=no        \
                  --disable-werror           \
-                 --enable-64-bit-bfd
+                 --enable-64-bit-bfd        \
+                 --enable-new-dtags         \
+                 --enable-default-hash-style=gnu
     make
     make DESTDIR=$LFS install
 EOT
@@ -1302,17 +1308,20 @@ RUN --mount=type=tmpfs \
     mkdir -v build
     cd build
     ../configure --prefix=/usr       \
-                 --enable-gold       \
+                 --sysconfdir=/etc   \
                  --enable-ld=default \
                  --enable-plugins    \
                  --enable-shared     \
                  --disable-werror    \
                  --enable-64-bit-bfd \
-                 --with-system-zlib
+                 --enable-new-dtags  \
+                 --with-system-zlib  \
+                 --enable-default-hash-style=gnu
     make tooldir=/usr
     if $ENABLE_TESTS; then make -k check; fi
     make tooldir=/usr install
-    rm -fv /usr/lib/lib{bfd,ctf,ctf-nobfd,opcodes}.a
+    rm -rfv /usr/lib/lib{bfd,ctf,ctf-nobfd,gprofng,opcodes,sframe}.a \
+            /usr/share/doc/gprofng/
 EOT
 
 # 8.19. GMP-6.2.1
