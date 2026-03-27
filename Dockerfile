@@ -1283,15 +1283,15 @@ RUN --mount=type=tmpfs \
     sed -e "s|$SRCDIR/unix|/usr/lib|" \
         -e "s|$SRCDIR|/usr/include|"  \
         -i tclConfig.sh
-    sed -e "s|$SRCDIR/unix/pkgs/tdbc1.1.3|/usr/lib/tdbc1.1.3|" \
-        -e "s|$SRCDIR/pkgs/tdbc1.1.3/generic|/usr/include|"    \
-        -e "s|$SRCDIR/pkgs/tdbc1.1.3/library|/usr/lib/tcl8.6|" \
-        -e "s|$SRCDIR/pkgs/tdbc1.1.3|/usr/include|"            \
-        -i pkgs/tdbc1.1.3/tdbcConfig.sh
-    sed -e "s|$SRCDIR/unix/pkgs/itcl4.2.2|/usr/lib/itcl4.2.2|" \
-        -e "s|$SRCDIR/pkgs/itcl4.2.2/generic|/usr/include|"    \
-        -e "s|$SRCDIR/pkgs/itcl4.2.2|/usr/include|"            \
-        -i pkgs/itcl4.2.2/itclConfig.sh
+    sed -e "s|$SRCDIR/unix/pkgs/tdbc1.1.12|/usr/lib/tdbc1.1.12|" \
+        -e "s|$SRCDIR/pkgs/tdbc1.1.12/generic|/usr/include|"     \
+        -e "s|$SRCDIR/pkgs/tdbc1.1.12/library|/usr/lib/tcl8.6|"  \
+        -e "s|$SRCDIR/pkgs/tdbc1.1.12|/usr/include|"             \
+        -i pkgs/tdbc1.1.12/tdbcConfig.sh
+    sed -e "s|$SRCDIR/unix/pkgs/itcl4.3.4|/usr/lib/itcl4.3.4|" \
+        -e "s|$SRCDIR/pkgs/itcl4.3.4/generic|/usr/include|"    \
+        -e "s|$SRCDIR/pkgs/itcl4.3.4|/usr/include|"            \
+        -i pkgs/itcl4.3.4/itclConfig.sh
     unset SRCDIR
     if $ENABLE_TESTS; then make test; fi
     make install
@@ -1299,8 +1299,8 @@ RUN --mount=type=tmpfs \
     make install-private-headers
     ln -sfv tclsh8.6 /usr/bin/tclsh
     mv /usr/share/man/man3/{Thread,Tcl_Thread}.3
-    mkdir -v -p /usr/share/doc/tcl-8.6.12
-    cp -v -r  ../html/* /usr/share/doc/tcl-8.6.12
+    mkdir -v -p /usr/share/doc/tcl-8.6.17
+    cp -v -r  ../html/* /usr/share/doc/tcl-8.6.17
 EOT
 
 # 8.16. Expect-5.45.4

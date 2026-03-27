@@ -120,4 +120,5 @@ https://www.linuxfromscratch.org/lfs/view/13.0-systemd/
 3. **glibc-2.42-upstream_fixes-1.patch not needed** - The design mentioned this patch but it's for glibc-2.42; LFS 13.0 uses glibc-2.43 which has fixes included
 4. **dbus tarball extension changed** - Now distributed as .tar.xz instead of .tar.gz
 5. **busybox source changed** - Now uses Alpine's busybox-static package instead of downloading from busybox.net (which has TLS timeout issues)
-6. **Tcl source changed** - Now uses Fossies mirror (fossies.org) instead of SourceForge due to Docker ADD redirect issues
+6. **Tcl source URL format changed** - Now uses `sourceforge.net/projects/tcl/files/.../download` suffix instead of `downloads.sourceforge.net/tcl/` due to Docker ADD redirect issues
+7. **Tcl bundled packages updated** - tdbc changed from 1.1.3 to 1.1.12, itcl changed from 4.2.2 to 4.3.4
