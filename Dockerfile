@@ -61,7 +61,7 @@ ARG BUSYBOX_ARCH
 # COPY --chmod=744 sources/bison-3.8.2.tar.xz .
 # COPY --chmod=744 sources/bzip2-1.0.8.tar.gz .
 # COPY --chmod=744 sources/coreutils-9.10.tar.xz .
-# COPY --chmod=744 sources/dbus-1.16.2.tar.gz .
+# COPY --chmod=744 sources/dbus-1.16.2.tar.xz .
 # COPY --chmod=744 sources/dejagnu-1.6.3.tar.gz .
 # COPY --chmod=744 sources/diffutils-3.12.tar.xz .
 # COPY --chmod=744 sources/e2fsprogs-1.47.3.tar.gz .
@@ -148,7 +148,7 @@ ADD --chmod=744 ${SOURCES_MIRROR:-https://ftp.gnu.org/gnu/binutils/}binutils-2.4
 ADD --chmod=744 ${SOURCES_MIRROR:-https://ftp.gnu.org/gnu/bison/}bison-3.8.2.tar.xz .
 ADD --chmod=744 ${SOURCES_MIRROR:-https://www.sourceware.org/pub/bzip2/}bzip2-1.0.8.tar.gz .
 ADD --chmod=744 ${SOURCES_MIRROR:-https://ftp.gnu.org/gnu/coreutils/}coreutils-9.10.tar.xz .
-ADD --chmod=744 ${SOURCES_MIRROR:-https://dbus.freedesktop.org/releases/dbus/}dbus-1.16.2.tar.gz .
+ADD --chmod=744 ${SOURCES_MIRROR:-https://dbus.freedesktop.org/releases/dbus/}dbus-1.16.2.tar.xz .
 ADD --chmod=744 ${SOURCES_MIRROR:-https://ftp.gnu.org/gnu/dejagnu/}dejagnu-1.6.3.tar.gz .
 ADD --chmod=744 ${SOURCES_MIRROR:-https://ftp.gnu.org/gnu/diffutils/}diffutils-3.12.tar.xz .
 ADD --chmod=744 ${SOURCES_MIRROR:-https://downloads.sourceforge.net/project/e2fsprogs/e2fsprogs/v1.47.3/}e2fsprogs-1.47.3.tar.gz .
@@ -2237,9 +2237,9 @@ EOT
 
 # 8.72. D-Bus-1.12.20
 RUN --mount=type=tmpfs \
-    --mount=from=sources,source=dbus-1.16.2.tar.gz,target=dbus-1.16.2.tar.gz \
+    --mount=from=sources,source=dbus-1.16.2.tar.xz,target=dbus-1.16.2.tar.xz \
 <<'EOT' $SH
-    tar -xf dbus-1.16.2.tar.gz
+    tar -xf dbus-1.16.2.tar.xz
     cd dbus-1.16.2
     ./configure --prefix=/usr                        \
                 --sysconfdir=/etc                    \
