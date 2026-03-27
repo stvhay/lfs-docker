@@ -2784,7 +2784,7 @@ RUN <<'EOT' $SH
 EOT
 
 # Copy kernel from the built system
-COPY --from=system /boot/vmlinuz-5.16.9 boot/vmlinuz
+COPY --from=system /boot/vmlinuz-6.18.10 boot/vmlinuz
 
 # Copy the initramfs we just made
 RUN cp ../initramfs.cpio.gz boot/initramfs.cpio.gz
