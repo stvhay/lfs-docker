@@ -107,7 +107,7 @@ ARG BUSYBOX_ARCH
 # COPY --chmod=744 sources/openssl-3.6.1.tar.gz .
 # COPY --chmod=744 sources/patch-2.8.tar.xz .
 # COPY --chmod=744 sources/perl-5.42.0.tar.xz .
-# COPY --chmod=744 sources/pkg-config-0.29.2.tar.gz .
+# COPY --chmod=744 sources/pkgconf-2.5.1.tar.xz .
 # COPY --chmod=744 sources/procps-ng-4.0.6.tar.xz .
 # COPY --chmod=744 sources/psmisc-23.7.tar.xz .
 # COPY --chmod=744 sources/Python-3.14.3.tar.xz .
@@ -195,7 +195,7 @@ ADD --chmod=744 ${SOURCES_MIRROR:-https://github.com/ninja-build/ninja/archive/v
 ADD --chmod=744 ${SOURCES_MIRROR:-https://www.openssl.org/source/}openssl-3.6.1.tar.gz .
 ADD --chmod=744 ${SOURCES_MIRROR:-https://ftp.gnu.org/gnu/patch/}patch-2.8.tar.xz .
 ADD --chmod=744 ${SOURCES_MIRROR:-https://www.cpan.org/src/5.0/}perl-5.42.0.tar.xz .
-ADD --chmod=744 ${SOURCES_MIRROR:-https://pkg-config.freedesktop.org/releases/}pkg-config-0.29.2.tar.gz .
+ADD --chmod=744 ${SOURCES_MIRROR:-https://distfiles.ariadne.space/pkgconf/}pkgconf-2.5.1.tar.xz .
 ADD --chmod=744 ${SOURCES_MIRROR:-https://sourceforge.net/projects/procps-ng/files/Production/}procps-ng-4.0.6.tar.xz .
 ADD --chmod=744 ${SOURCES_MIRROR:-https://sourceforge.net/projects/psmisc/files/psmisc/}psmisc-23.7.tar.xz .
 ADD --chmod=744 ${SOURCES_MIRROR:-https://www.python.org/ftp/python/3.10.2/}Python-3.14.3.tar.xz .
@@ -1491,19 +1491,19 @@ RUN --mount=type=tmpfs \
     mv -v /usr/lib/*gdb.py /usr/share/gdb/auto-load/usr/lib
 EOT
 
-# 8.27. Pkg-config-0.29.2
+# 8.27. Pkgconf-2.5.1
 RUN --mount=type=tmpfs \
-    --mount=from=sources,source=pkg-config-0.29.2.tar.gz,target=pkg-config-0.29.2.tar.gz \
+    --mount=from=sources,source=pkgconf-2.5.1.tar.xz,target=pkgconf-2.5.1.tar.xz \
 <<'EOT' $SH
-    tar -xf pkg-config-0.29.2.tar.gz
-    cd pkg-config-0.29.2
+    tar -xf pkgconf-2.5.1.tar.xz
+    cd pkgconf-2.5.1
     ./configure --prefix=/usr              \
-                --with-internal-glib       \
-                --disable-host-tool        \
-                --docdir=/usr/share/doc/pkg-config-0.29.2
+                --docdir=/usr/share/doc/pkgconf-2.5.1
     make
     if $ENABLE_TESTS; then make check; fi
     make install
+    ln -sv pkgconf /usr/bin/pkg-config
+    ln -sv pkgconf.1 /usr/share/man/man1/pkg-config.1
 EOT
 
 # 8.28. Ncurses-6.3
