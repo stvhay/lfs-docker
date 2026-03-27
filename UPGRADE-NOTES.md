@@ -83,6 +83,9 @@ The following packages required build instruction changes beyond version updates
 ### GCC hardcoded paths
 - Updated hardcoded GCC version paths from 11.2.0 to 15.2.0 (mkheaders, include dirs, etc.)
 
+### M4 (cross-compile stage)
+- Added `gl_cv_func_wctomb_retval=yes` to workaround MB_LEN_MAX check failure with glibc 2.43
+
 If other builds fail, check the LFS 13.0 book for instruction changes:
 https://www.linuxfromscratch.org/lfs/view/13.0-systemd/
 
