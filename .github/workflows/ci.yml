@@ -1,0 +1,69 @@
+name: CI
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+
+jobs:
+  version-check:
+    name: Version Check
+    runs-on: ubuntu-latest
+    if: github.event_name == 'pull_request'
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Check bump label matches changelog
+        run: |
+          # Get PR labels
+          LABELS=$(gh pr view ${{ github.event.pull_request.number }} --json labels --jq '.labels[].name' 2>/dev/null || echo "")
+
+          # Extract bump type from label (bump:patch, bump:minor, bump:major)
+          LABEL_BUMP=""
+          for label in $LABELS; do
+            case "$label" in
+              bump:patch) LABEL_BUMP="patch" ;;
+              bump:minor) LABEL_BUMP="minor" ;;
+              bump:major) LABEL_BUMP="major" ;;
+            esac
+          done
+
+          # Extract bump type from changelog comment
+          CHANGELOG_BUMP=""
+          if [ -f CHANGELOG.md ]; then
+            CHANGELOG_BUMP=$(grep -oP '<!--\s*bump:\s*\K\w+' CHANGELOG.md | head -1 || echo "")
+          fi
+
+          # Validate consistency
+          if [ -n "$LABEL_BUMP" ] && [ -n "$CHANGELOG_BUMP" ]; then
+            if [ "$LABEL_BUMP" != "$CHANGELOG_BUMP" ]; then
+              echo "Error: PR label bump:$LABEL_BUMP does not match CHANGELOG.md bump comment: $CHANGELOG_BUMP"
+              exit 1
+            fi
+            echo "Bump type consistent: $LABEL_BUMP"
+          elif [ -n "$LABEL_BUMP" ]; then
+            echo "Warning: PR has bump:$LABEL_BUMP label but no bump comment in CHANGELOG.md"
+          elif [ -n "$CHANGELOG_BUMP" ]; then
+            echo "Info: CHANGELOG.md has bump:$CHANGELOG_BUMP but no PR label (optional)"
+          else
+            echo "No bump type specified (this is fine for non-release PRs)"
+          fi
+        env:
+          GH_TOKEN: ${{ github.token }}
+
+  test:
+    name: Test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Validate Dockerfile syntax
+        run: |
+          docker build --check .
+
+      - name: Validate version scripts
+        run: |
+          chmod +x compute-version.sh
+          python3 compute_version.py --help
+          ./compute-version.sh
