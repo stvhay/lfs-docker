@@ -17,12 +17,10 @@ ARG SH="sh -eu"
 # For x86_64
 # ARG LFS_ARCH=x86_64
 # ARG DOCKER_ARCH=amd64
-# ARG BUSYBOX_ARCH=x86_64
 
 # For aarch64
 ARG LFS_ARCH=aarch64
 ARG DOCKER_ARCH=arm64v8
-ARG BUSYBOX_ARCH=armv8l
 
 ARG LFS=/lfs
 ARG LFS_TGT=${LFS_ARCH}-lfs-linux-gnu
@@ -46,7 +44,6 @@ ARG ISO_GRUB_PRELOAD_MODULES="part_gpt part_msdos linux normal iso9660 udf all_v
 
 # Source files
 FROM scratch AS sources
-ARG BUSYBOX_ARCH
 
 # NOTE: If you have already downloaded all required source files, you can
 # put all of them into a local directory, say, sources/, then uncomment the
@@ -134,7 +131,6 @@ ARG BUSYBOX_ARCH
 # COPY --chmod=744 sources/expect-5.45.4-gcc15-1.patch .
 # COPY --chmod=744 sources/glibc-fhs-1.patch .
 # COPY --chmod=744 sources/kbd-2.9.0-backspace-1.patch .
-# COPY --chmod=744 sources/busybox-${BUSYBOX_ARCH} .
 
 # NOTE: Even if this list is updated, BuildKit will only rebuild layers that use the updated files
 ARG SOURCES_MIRROR
@@ -221,7 +217,7 @@ ADD --chmod=744 ${SOURCES_MIRROR:-https://www.linuxfromscratch.org/patches/lfs/1
 ADD --chmod=744 ${SOURCES_MIRROR:-https://www.linuxfromscratch.org/patches/lfs/13.0/}expect-5.45.4-gcc15-1.patch .
 ADD --chmod=744 ${SOURCES_MIRROR:-https://www.linuxfromscratch.org/patches/lfs/13.0/}glibc-fhs-1.patch .
 ADD --chmod=744 ${SOURCES_MIRROR:-https://www.linuxfromscratch.org/patches/lfs/13.0/}kbd-2.9.0-backspace-1.patch .
-ADD --chmod=744 ${SOURCES_MIRROR:-https://www.busybox.net/downloads/binaries/1.28.1-defconfig-multiarch/}busybox-${BUSYBOX_ARCH} .
+# busybox is now provided by Alpine's busybox-static package in iso-builder stage
 
 #################
 # Stage 1. Host #
@@ -2573,6 +2569,7 @@ RUN apk add --no-cache \
         squashfs-tools xorriso cpio wget \
         dosfstools mtools \
         grub grub-efi \
+        busybox-static \
         $([[ $LFS_ARCH = x86_64 ]] && echo grub-bios)
 
 RUN mkdir -pv /build
@@ -2702,11 +2699,9 @@ echo "Could not find the boot device"
 exec sh
 EOT
 
-# Install busybox to initramfs
-ARG BUSYBOX_ARCH
-RUN --mount=from=sources,source=busybox-${BUSYBOX_ARCH},target=/tmp/busybox-${BUSYBOX_ARCH} \
-<<'EOT' $SH
-    cp /tmp/busybox-${BUSYBOX_ARCH} bin/busybox
+# Install busybox to initramfs (using Alpine's busybox-static)
+RUN <<'EOT' $SH
+    cp /bin/busybox.static bin/busybox
     # Use the busybox binary on the host system to install symbolic links
     /bin/busybox --install -s bin
     chmod +x bin/busybox
