@@ -202,8 +202,9 @@ ADD --chmod=744 ${SOURCES_MIRROR:-https://github.com/shadow-maint/shadow/release
 ADD --chmod=744 ${SOURCES_MIRROR:-https://github.com/systemd/systemd/archive/v259.1/}systemd-259.1.tar.gz .
 ADD --chmod=744 ${SOURCES_MIRROR:-https://anduin.linuxfromscratch.org/LFS/}systemd-man-pages-259.1.tar.xz .
 ADD --chmod=744 ${SOURCES_MIRROR:-https://ftpmirror.gnu.org/gnu/tar/}tar-1.35.tar.xz .
-ADD --chmod=744 ${SOURCES_MIRROR:-https://downloads.sourceforge.net/tcl/}tcl8.6.17-src.tar.gz .
-ADD --chmod=744 ${SOURCES_MIRROR:-https://downloads.sourceforge.net/tcl/}tcl8.6.17-html.tar.gz .
+# SourceForge /download URL works better with Docker ADD redirects
+ADD --chmod=744 ${SOURCES_MIRROR:-https://sourceforge.net/projects/tcl/files/Tcl/8.6.17/tcl8.6.17-src.tar.gz/}download tcl8.6.17-src.tar.gz
+ADD --chmod=744 ${SOURCES_MIRROR:-https://sourceforge.net/projects/tcl/files/Tcl/8.6.17/tcl8.6.17-html.tar.gz/}download tcl8.6.17-html.tar.gz
 ADD --chmod=744 ${SOURCES_MIRROR:-https://ftpmirror.gnu.org/gnu/texinfo/}texinfo-7.2.tar.xz .
 ADD --chmod=744 ${SOURCES_MIRROR:-https://www.iana.org/time-zones/repository/releases/}tzdata2025c.tar.gz .
 ADD --chmod=744 ${SOURCES_MIRROR:-https://www.kernel.org/pub/linux/utils/util-linux/v2.41/}util-linux-2.41.3.tar.xz .
@@ -473,10 +474,12 @@ RUN --mount=type=tmpfs \
 <<'EOT' $SH
     tar -xf bash-5.3.tar.gz
     cd bash-5.3
+    # Workaround for MB_LEN_MAX mismatch between host and target during cross-compilation
     ./configure --prefix=/usr                   \
                 --build=$(support/config.guess) \
                 --host=$LFS_TGT                 \
-                --without-bash-malloc
+                --without-bash-malloc           \
+                CFLAGS="-isystem $LFS/usr/include"
     make
     make DESTDIR=$LFS install
     ln -sv bash $LFS/bin/sh
@@ -488,11 +491,14 @@ RUN --mount=type=tmpfs \
 <<'EOT' $SH
     tar -xf coreutils-9.10.tar.xz
     cd coreutils-9.10
+    # Workaround for MB_LEN_MAX mismatch between host and target during cross-compilation
+    # glibc 2.43 uses MB_LEN_MAX=32, ensure the target headers are used
     ./configure --prefix=/usr                     \
                 --host=$LFS_TGT                   \
                 --build=$(build-aux/config.guess) \
                 --enable-install-program=hostname \
-                --enable-no-install-program=kill,uptime
+                --enable-no-install-program=kill,uptime \
+                CFLAGS="-isystem $LFS/usr/include"
     make
     make DESTDIR=$LFS install
     mv -v $LFS/usr/bin/chroot              $LFS/usr/sbin
@@ -507,7 +513,13 @@ RUN --mount=type=tmpfs \
 <<'EOT' $SH
     tar -xf diffutils-3.12.tar.xz
     cd diffutils-3.12
-    ./configure --prefix=/usr --host=$LFS_TGT
+    # Workaround for MB_LEN_MAX mismatch between host and target during cross-compilation
+    # gl_cv_func_strcasecmp_works=y avoids test program execution during cross-compile
+    ./configure --prefix=/usr   \
+                --host=$LFS_TGT \
+                --build=$(./build-aux/config.guess) \
+                gl_cv_func_strcasecmp_works=y \
+                CFLAGS="-isystem $LFS/usr/include"
     make
     make DESTDIR=$LFS install
 EOT
@@ -526,7 +538,9 @@ RUN --mount=type=tmpfs \
                  --disable-zlib
     make
     popd
-    ./configure --prefix=/usr --host=$LFS_TGT --build=$(./config.guess)
+    # Workaround for MB_LEN_MAX mismatch between host and target during cross-compilation
+    ./configure --prefix=/usr --host=$LFS_TGT --build=$(./config.guess) \
+                CFLAGS="-isystem $LFS/usr/include"
     make FILE_COMPILE=$(pwd)/build/src/file
     make DESTDIR=$LFS install
 EOT
@@ -537,10 +551,12 @@ RUN --mount=type=tmpfs \
 <<'EOT' $SH
     tar -xf findutils-4.10.0.tar.xz
     cd findutils-4.10.0
+    # Workaround for MB_LEN_MAX mismatch between host and target during cross-compilation
     ./configure --prefix=/usr                   \
                 --localstatedir=/var/lib/locate \
                 --host=$LFS_TGT                 \
-                --build=$(build-aux/config.guess)
+                --build=$(build-aux/config.guess) \
+                CFLAGS="-isystem $LFS/usr/include"
     make
     make DESTDIR=$LFS install
 EOT
@@ -552,9 +568,11 @@ RUN --mount=type=tmpfs \
     tar -xf gawk-5.3.2.tar.xz
     cd gawk-5.3.2
     sed -i 's/extras//' Makefile.in
+    # Workaround for MB_LEN_MAX mismatch between host and target during cross-compilation
     ./configure --prefix=/usr   \
                 --host=$LFS_TGT \
-                --build=$(build-aux/config.guess)
+                --build=$(build-aux/config.guess) \
+                CFLAGS="-isystem $LFS/usr/include"
     make
     make DESTDIR=$LFS install
 EOT
@@ -565,7 +583,11 @@ RUN --mount=type=tmpfs \
 <<'EOT' $SH
     tar -xf grep-3.12.tar.xz
     cd grep-3.12
-    ./configure --prefix=/usr --host=$LFS_TGT
+    # Workaround for MB_LEN_MAX mismatch between host and target during cross-compilation
+    ./configure --prefix=/usr   \
+                --host=$LFS_TGT \
+                --build=$(./build-aux/config.guess) \
+                CFLAGS="-isystem $LFS/usr/include"
     make
     make DESTDIR=$LFS install
 EOT
@@ -576,7 +598,9 @@ RUN --mount=type=tmpfs \
 <<'EOT' $SH
     tar -xf gzip-1.14.tar.xz
     cd gzip-1.14
-    ./configure --prefix=/usr --host=$LFS_TGT
+    # Workaround for MB_LEN_MAX mismatch between host and target during cross-compilation
+    ./configure --prefix=/usr --host=$LFS_TGT \
+                CFLAGS="-isystem $LFS/usr/include"
     make
     make DESTDIR=$LFS install
 EOT
@@ -587,10 +611,12 @@ RUN --mount=type=tmpfs \
 <<'EOT' $SH
     tar -xf make-4.4.1.tar.gz
     cd make-4.4.1
+    # Workaround for MB_LEN_MAX mismatch between host and target during cross-compilation
     ./configure --prefix=/usr   \
                 --without-guile \
                 --host=$LFS_TGT \
-                --build=$(build-aux/config.guess)
+                --build=$(build-aux/config.guess) \
+                CFLAGS="-isystem $LFS/usr/include"
     make
     make DESTDIR=$LFS install
 EOT
@@ -601,9 +627,11 @@ RUN --mount=type=tmpfs \
 <<'EOT' $SH
     tar -xf patch-2.8.tar.xz
     pushd patch-2.8
+    # Workaround for MB_LEN_MAX mismatch between host and target during cross-compilation
     ./configure --prefix=/usr   \
                 --host=$LFS_TGT \
-                --build=$(build-aux/config.guess)
+                --build=$(build-aux/config.guess) \
+                CFLAGS="-isystem $LFS/usr/include"
     make
     make DESTDIR=$LFS install
 EOT
@@ -614,7 +642,11 @@ RUN --mount=type=tmpfs \
 <<'EOT' $SH
     tar -xf sed-4.9.tar.xz
     cd sed-4.9
-    ./configure --prefix=/usr --host=$LFS_TGT
+    # Workaround for MB_LEN_MAX mismatch between host and target during cross-compilation
+    ./configure --prefix=/usr   \
+                --host=$LFS_TGT \
+                --build=$(./build-aux/config.guess) \
+                CFLAGS="-isystem $LFS/usr/include"
     make
     make DESTDIR=$LFS install
 EOT
@@ -625,9 +657,11 @@ RUN --mount=type=tmpfs \
 <<'EOT' $SH
     tar -xf tar-1.35.tar.xz
     cd tar-1.35
+    # Workaround for MB_LEN_MAX mismatch between host and target during cross-compilation
     ./configure --prefix=/usr   \
                 --host=$LFS_TGT \
-                --build=$(build-aux/config.guess)
+                --build=$(build-aux/config.guess) \
+                CFLAGS="-isystem $LFS/usr/include"
     make
     make DESTDIR=$LFS install
 EOT
@@ -638,11 +672,13 @@ RUN --mount=type=tmpfs \
 <<'EOT' $SH
     tar -xf xz-5.8.2.tar.xz
     cd xz-5.8.2
+    # Workaround for MB_LEN_MAX mismatch between host and target during cross-compilation
     ./configure --prefix=/usr                     \
                 --host=$LFS_TGT                   \
                 --build=$(build-aux/config.guess) \
                 --disable-static                  \
-                --docdir=/usr/share/doc/xz-5.8.2
+                --docdir=/usr/share/doc/xz-5.8.2  \
+                CFLAGS="-isystem $LFS/usr/include"
     make
     make DESTDIR=$LFS install
 EOT
@@ -653,9 +689,10 @@ RUN --mount=type=tmpfs \
 <<'EOT' $SH
     tar -xf binutils-2.46.0.tar.xz
     cd binutils-2.46.0
-    sed '6009s/$add_dir//' -i ltmain.sh
+    sed '6031s/$add_dir//' -i ltmain.sh
     mkdir -v build
     cd build
+    # Workaround for PATH_MAX not being defined when cross-compiling with target headers
     ../configure --prefix=/usr              \
                  --build=$(../config.guess) \
                  --host=$LFS_TGT            \
@@ -665,7 +702,8 @@ RUN --mount=type=tmpfs \
                  --disable-werror           \
                  --enable-64-bit-bfd        \
                  --enable-new-dtags         \
-                 --enable-default-hash-style=gnu
+                 --enable-default-hash-style=gnu \
+                 CFLAGS="-isystem $LFS/usr/include"
     make
     make DESTDIR=$LFS install
 EOT
@@ -930,19 +968,20 @@ RUN --mount=type=tmpfs \
     tar -xf util-linux-2.41.3.tar.xz
     cd util-linux-2.41.3
     mkdir -pv /var/lib/hwclock
-    ./configure ADJTIME_PATH=/var/lib/hwclock/adjtime \
-                --libdir=/usr/lib    \
-                --docdir=/usr/share/doc/util-linux-2.41.3 \
-                --disable-chfn-chsh  \
-                --disable-login      \
-                --disable-nologin    \
-                --disable-su         \
-                --disable-setpriv    \
-                --disable-runuser    \
-                --disable-pylibmount \
-                --disable-static     \
-                --without-python     \
-                runstatedir=/run
+    ./configure --libdir=/usr/lib     \
+                --runstatedir=/run    \
+                --disable-chfn-chsh   \
+                --disable-login       \
+                --disable-nologin     \
+                --disable-su          \
+                --disable-setpriv     \
+                --disable-runuser     \
+                --disable-pylibmount  \
+                --disable-static      \
+                --disable-liblastlog2 \
+                --without-python      \
+                ADJTIME_PATH=/var/lib/hwclock/adjtime \
+                --docdir=/usr/share/doc/util-linux-2.41.3
     make
     make install
 EOT
@@ -968,13 +1007,15 @@ ARG MAKEFLAGS
 
 WORKDIR /tmp
 
-# 8.3. Man-pages-5.13
+# 8.3. Man-pages-6.17
 RUN --mount=type=tmpfs \
     --mount=from=sources,source=man-pages-6.17.tar.xz,target=man-pages-6.17.tar.xz \
 <<'EOT' $SH
     tar -xf man-pages-6.17.tar.xz
     cd man-pages-6.17
-    make prefix=/usr install
+    # Remove crypt man pages - libxcrypt will provide better versions
+    rm -v man3/crypt*
+    make -R GIT=false prefix=/usr install
 EOT
 
 # 8.4. Iana-Etc-20220207
@@ -1197,13 +1238,14 @@ RUN --mount=type=tmpfs \
     make install
 EOT
 
-# 8.13. Bc-5.2.2
+# 8.15. Bc-7.0.3
 RUN --mount=type=tmpfs \
     --mount=from=sources,source=bc-7.0.3.tar.xz,target=bc-7.0.3.tar.xz \
 <<'EOT' $SH
     tar -xf bc-7.0.3.tar.xz
     cd bc-7.0.3
-    CC=gcc ./configure --prefix=/usr -G -O3
+    # Use C99 to ensure proper handling of bool/true/false
+    CC='gcc -std=c99' ./configure --prefix=/usr -G -O3 -r
     make
     if $ENABLE_TESTS; then make test; fi
     make install
@@ -2316,6 +2358,7 @@ RUN --mount=type=tmpfs \
                 --bindir=/usr/bin    \
                 --libdir=/usr/lib    \
                 --sbindir=/usr/sbin  \
+                --runstatedir=/run   \
                 --docdir=/usr/share/doc/util-linux-2.41.3 \
                 --disable-chfn-chsh  \
                 --disable-login      \
@@ -2325,6 +2368,7 @@ RUN --mount=type=tmpfs \
                 --disable-runuser    \
                 --disable-pylibmount \
                 --disable-static     \
+                --disable-liblastlog2 \
                 --without-python
     make
     if $ENABLE_TESTS; then \

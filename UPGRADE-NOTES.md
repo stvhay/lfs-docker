@@ -83,8 +83,32 @@ The following packages required build instruction changes beyond version updates
 ### GCC hardcoded paths
 - Updated hardcoded GCC version paths from 11.2.0 to 15.2.0 (mkheaders, include dirs, etc.)
 
-### M4 (cross-compile stage)
-- Added `gl_cv_func_wctomb_retval=yes` to workaround MB_LEN_MAX check failure with glibc 2.43
+### All Chapter 6 cross-compiled packages (MB_LEN_MAX workaround)
+glibc 2.43 changed MB_LEN_MAX from 16 to 32. When cross-compiling on Alpine (musl-based), the host compiler's headers provide MB_LEN_MAX=16, but the target glibc headers expect 32, causing a compile-time assertion failure:
+```
+#error "Assumed value of MB_LEN_MAX wrong"
+```
+
+**Fix:** Add `CFLAGS="-isystem $LFS/usr/include"` to all chapter 6 cross-compile configure commands to prioritize target glibc headers over host headers.
+
+Affected packages:
+- m4, bash, coreutils, diffutils, file, findutils, gawk, grep, gzip, make, patch, sed, tar, xz
+
+### Ncurses (cross-compile stage)
+- Updated to LFS 13.0 build approach: build host tic first, install to `$LFS/tools/bin`, then cross-compile
+
+### Util-linux (chapter 7 and 8)
+- Added `--disable-liblastlog2` to disable liblastlog2 feature (requires sqlite3 which is not in base LFS)
+- Added `--runstatedir=/run`
+- Reordered configure options to match LFS 13.0 book
+
+### Man-pages
+- Added `rm -v man3/crypt*` to remove crypt man pages (libxcrypt provides better versions)
+- Changed `make prefix=/usr install` to `make -R GIT=false prefix=/usr install`
+
+### Bc
+- Changed `CC=gcc` to `CC='gcc -std=c99'` to fix GCC 15 compatibility with true/false macros
+- Added `-r` option to configure
 
 If other builds fail, check the LFS 13.0 book for instruction changes:
 https://www.linuxfromscratch.org/lfs/view/13.0-systemd/
@@ -96,3 +120,4 @@ https://www.linuxfromscratch.org/lfs/view/13.0-systemd/
 3. **glibc-2.42-upstream_fixes-1.patch not needed** - The design mentioned this patch but it's for glibc-2.42; LFS 13.0 uses glibc-2.43 which has fixes included
 4. **dbus tarball extension changed** - Now distributed as .tar.xz instead of .tar.gz
 5. **busybox source changed** - Now uses Alpine's busybox-static package instead of downloading from busybox.net (which has TLS timeout issues)
+6. **Tcl source changed** - Now uses Fossies mirror (fossies.org) instead of SourceForge due to Docker ADD redirect issues
