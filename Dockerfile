@@ -59,14 +59,12 @@ ARG BUSYBOX_ARCH
 # COPY --chmod=744 sources/binutils-2.46.0.tar.xz .
 # COPY --chmod=744 sources/bison-3.8.2.tar.xz .
 # COPY --chmod=744 sources/bzip2-1.0.8.tar.gz .
-# COPY --chmod=744 sources/check-0.15.2.tar.gz .
 # COPY --chmod=744 sources/coreutils-9.10.tar.xz .
 # COPY --chmod=744 sources/dbus-1.16.2.tar.gz .
 # COPY --chmod=744 sources/dejagnu-1.6.3.tar.gz .
 # COPY --chmod=744 sources/diffutils-3.12.tar.xz .
 # COPY --chmod=744 sources/e2fsprogs-1.47.3.tar.gz .
 # COPY --chmod=744 sources/elfutils-0.194.tar.bz2 .
-# COPY --chmod=744 sources/eudev-3.2.11.tar.gz .
 # COPY --chmod=744 sources/expat-2.7.4.tar.xz .
 # COPY --chmod=744 sources/expect5.45.4.tar.gz .
 # COPY --chmod=744 sources/file-5.46.tar.gz .
@@ -91,7 +89,6 @@ ARG BUSYBOX_ARCH
 # COPY --chmod=744 sources/kbd-2.9.0.tar.xz .
 # COPY --chmod=744 sources/kmod-34.2.tar.xz .
 # COPY --chmod=744 sources/less-692.tar.gz .
-# COPY --chmod=744 sources/lfs-bootscripts-20210608.tar.xz .
 # COPY --chmod=744 sources/libcap-2.77.tar.xz .
 # COPY --chmod=744 sources/libffi-3.5.2.tar.gz .
 # COPY --chmod=744 sources/libpipeline-1.5.8.tar.gz .
@@ -118,16 +115,13 @@ ARG BUSYBOX_ARCH
 # COPY --chmod=744 sources/readline-8.3.tar.gz .
 # COPY --chmod=744 sources/sed-4.9.tar.xz .
 # COPY --chmod=744 sources/shadow-4.19.3.tar.xz .
-# COPY --chmod=744 sources/sysklogd-1.5.1.tar.gz .
 # COPY --chmod=744 sources/systemd-259.1.tar.gz .
 # COPY --chmod=744 sources/systemd-man-pages-259.1.tar.xz .
-# COPY --chmod=744 sources/sysvinit-3.01.tar.xz .
 # COPY --chmod=744 sources/tar-1.35.tar.xz .
 # COPY --chmod=744 sources/tcl8.6.17-src.tar.gz .
 # COPY --chmod=744 sources/tcl8.6.17-html.tar.gz .
 # COPY --chmod=744 sources/texinfo-7.2.tar.xz .
 # COPY --chmod=744 sources/tzdata2025c.tar.gz .
-# COPY --chmod=744 sources/udev-lfs-20171102.tar.xz .
 # COPY --chmod=744 sources/util-linux-2.41.3.tar.xz .
 # COPY --chmod=744 sources/vim-9.2.0078.tar.gz .
 # COPY --chmod=744 sources/XML-Parser-2.47.tar.gz .
@@ -153,14 +147,12 @@ ADD --chmod=744 ${SOURCES_MIRROR:-https://github.com/gavinhoward/bc/releases/dow
 ADD --chmod=744 ${SOURCES_MIRROR:-https://ftp.gnu.org/gnu/binutils/}binutils-2.46.0.tar.xz .
 ADD --chmod=744 ${SOURCES_MIRROR:-https://ftp.gnu.org/gnu/bison/}bison-3.8.2.tar.xz .
 ADD --chmod=744 ${SOURCES_MIRROR:-https://www.sourceware.org/pub/bzip2/}bzip2-1.0.8.tar.gz .
-ADD --chmod=744 ${SOURCES_MIRROR:-https://github.com/libcheck/check/releases/download/0.15.2/}check-0.15.2.tar.gz .
 ADD --chmod=744 ${SOURCES_MIRROR:-https://ftp.gnu.org/gnu/coreutils/}coreutils-9.10.tar.xz .
 ADD --chmod=744 ${SOURCES_MIRROR:-https://dbus.freedesktop.org/releases/dbus/}dbus-1.16.2.tar.gz .
 ADD --chmod=744 ${SOURCES_MIRROR:-https://ftp.gnu.org/gnu/dejagnu/}dejagnu-1.6.3.tar.gz .
 ADD --chmod=744 ${SOURCES_MIRROR:-https://ftp.gnu.org/gnu/diffutils/}diffutils-3.12.tar.xz .
 ADD --chmod=744 ${SOURCES_MIRROR:-https://downloads.sourceforge.net/project/e2fsprogs/e2fsprogs/v1.46.5/}e2fsprogs-1.47.3.tar.gz .
 ADD --chmod=744 ${SOURCES_MIRROR:-https://sourceware.org/ftp/elfutils/0.186/}elfutils-0.194.tar.bz2 .
-ADD --chmod=744 ${SOURCES_MIRROR:-https://github.com/eudev-project/eudev/releases/download/v3.2.11/}eudev-3.2.11.tar.gz .
 ADD --chmod=744 ${SOURCES_MIRROR:-https://prdownloads.sourceforge.net/expat/}expat-2.7.4.tar.xz .
 ADD --chmod=744 ${SOURCES_MIRROR:-https://prdownloads.sourceforge.net/expect/}expect5.45.4.tar.gz .
 ADD --chmod=744 ${SOURCES_MIRROR:-https://astron.com/pub/file/}file-5.46.tar.gz .
@@ -185,7 +177,6 @@ ADD --chmod=744 ${SOURCES_MIRROR:-https://files.pythonhosted.org/packages/source
 ADD --chmod=744 ${SOURCES_MIRROR:-https://www.kernel.org/pub/linux/utils/kbd/}kbd-2.9.0.tar.xz .
 ADD --chmod=744 ${SOURCES_MIRROR:-https://www.kernel.org/pub/linux/utils/kernel/kmod/}kmod-34.2.tar.xz .
 ADD --chmod=744 ${SOURCES_MIRROR:-https://www.greenwoodsoftware.com/less/}less-692.tar.gz .
-ADD --chmod=744 ${SOURCES_MIRROR:-https://www.linuxfromscratch.org/lfs/downloads/11.1/}lfs-bootscripts-20210608.tar.xz .
 ADD --chmod=744 ${SOURCES_MIRROR:-https://www.kernel.org/pub/linux/libs/security/linux-privs/libcap2/}libcap-2.77.tar.xz .
 ADD --chmod=744 ${SOURCES_MIRROR:-https://github.com/libffi/libffi/releases/download/v3.4.2/}libffi-3.5.2.tar.gz .
 ADD --chmod=744 ${SOURCES_MIRROR:-https://download.savannah.gnu.org/releases/libpipeline/}libpipeline-1.5.8.tar.gz .
@@ -212,16 +203,13 @@ ADD --chmod=744 ${SOURCES_MIRROR:-https://www.python.org/ftp/python/doc/3.10.2/}
 ADD --chmod=744 ${SOURCES_MIRROR:-https://ftp.gnu.org/gnu/readline/}readline-8.3.tar.gz .
 ADD --chmod=744 ${SOURCES_MIRROR:-https://ftp.gnu.org/gnu/sed/}sed-4.9.tar.xz .
 ADD --chmod=744 ${SOURCES_MIRROR:-https://github.com/shadow-maint/shadow/releases/download/v4.11.1/}shadow-4.19.3.tar.xz .
-ADD --chmod=744 ${SOURCES_MIRROR:-https://www.infodrom.org/projects/sysklogd/download/}sysklogd-1.5.1.tar.gz .
 ADD --chmod=744 ${SOURCES_MIRROR:-https://github.com/systemd/systemd/archive/v250/}systemd-259.1.tar.gz .
 ADD --chmod=744 ${SOURCES_MIRROR:-https://anduin.linuxfromscratch.org/LFS/}systemd-man-pages-259.1.tar.xz .
-ADD --chmod=744 ${SOURCES_MIRROR:-https://download.savannah.gnu.org/releases/sysvinit/}sysvinit-3.01.tar.xz .
 ADD --chmod=744 ${SOURCES_MIRROR:-https://ftp.gnu.org/gnu/tar/}tar-1.35.tar.xz .
 ADD --chmod=744 ${SOURCES_MIRROR:-https://downloads.sourceforge.net/tcl/}tcl8.6.17-src.tar.gz .
 ADD --chmod=744 ${SOURCES_MIRROR:-https://downloads.sourceforge.net/tcl/}tcl8.6.17-html.tar.gz .
 ADD --chmod=744 ${SOURCES_MIRROR:-https://ftp.gnu.org/gnu/texinfo/}texinfo-7.2.tar.xz .
 ADD --chmod=744 ${SOURCES_MIRROR:-https://www.iana.org/time-zones/repository/releases/}tzdata2025c.tar.gz .
-ADD --chmod=744 ${SOURCES_MIRROR:-https://anduin.linuxfromscratch.org/LFS/}udev-lfs-20171102.tar.xz .
 ADD --chmod=744 ${SOURCES_MIRROR:-https://www.kernel.org/pub/linux/utils/util-linux/v2.37/}util-linux-2.41.3.tar.xz .
 ADD --chmod=744 ${SOURCES_MIRROR:-https://anduin.linuxfromscratch.org/LFS/}vim-9.2.0078.tar.gz .
 ADD --chmod=744 ${SOURCES_MIRROR:-https://cpan.metacpan.org/authors/id/T/TO/TODDR/}XML-Parser-2.47.tar.gz .
@@ -1952,19 +1940,7 @@ RUN --mount=type=tmpfs \
     sed -i 's/"1"/"8"/' /usr/share/man/man8/chroot.8
 EOT
 
-# 8.54. Check-0.15.2
-RUN --mount=type=tmpfs \
-    --mount=from=sources,source=check-0.15.2.tar.gz,target=check-0.15.2.tar.gz \
-<<'EOT' $SH
-    tar -xf check-0.15.2.tar.gz
-    cd check-0.15.2
-    ./configure --prefix=/usr --disable-static
-    make
-    if $ENABLE_TESTS; then make check; fi
-    make docdir=/usr/share/doc/check-0.15.2 install
-EOT
-
-# 8.55. Diffutils-3.8
+# 8.54. Diffutils-3.12
 RUN --mount=type=tmpfs \
     --mount=from=sources,source=diffutils-3.12.tar.xz,target=diffutils-3.12.tar.xz \
 <<'EOT' $SH
