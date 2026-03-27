@@ -1,7 +1,7 @@
 # syntax=docker/dockerfile:1.4
 # BuildKit is required to build this Dockerfile
 
-# Based on LFS 11.1-systemd: https://www.linuxfromscratch.org/lfs/view/11.1-systemd/
+# Based on LFS 13.0-systemd: https://www.linuxfromscratch.org/lfs/view/13.0-systemd/
 # For the aarch64 version, the following adaptation is also referenced:
 # https://linuxfromscratch.org/~kb0iic/lfs-systemd/index.html
 
