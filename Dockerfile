@@ -298,7 +298,7 @@ RUN --mount=type=tmpfs \
     make install
 EOT
 
-# 5.3. GCC-11.2.0 - Pass 1
+# 5.3. GCC-15.2.0 - Pass 1
 RUN --mount=type=tmpfs \
     --mount=from=sources,source=gcc-15.2.0.tar.xz,target=gcc-15.2.0.tar.xz \
     --mount=from=sources,source=mpfr-4.2.2.tar.xz,target=mpfr-4.2.2.tar.xz \
@@ -396,10 +396,10 @@ RUN --mount=type=tmpfs \
     make
     make DESTDIR=$LFS install
     sed '/RTLDLIST=/s@/usr@@g' -i $LFS/usr/bin/ldd
-    $LFS/tools/libexec/gcc/$LFS_TGT/11.2.0/install-tools/mkheaders
+    $LFS/tools/libexec/gcc/$LFS_TGT/15.2.0/install-tools/mkheaders
 EOT
 
-# 5.6. Libstdc++ from GCC-11.2.0, Pass 1
+# 5.6. Libstdc++ from GCC-15.2.0, Pass 1
 RUN --mount=type=tmpfs \
     --mount=from=sources,source=gcc-15.2.0.tar.xz,target=gcc-15.2.0.tar.xz \
 <<'EOT' $SH
@@ -414,7 +414,7 @@ RUN --mount=type=tmpfs \
         --disable-multilib         \
         --disable-nls              \
         --disable-libstdcxx-pch    \
-        --with-gxx-include-dir=/tools/$LFS_TGT/include/c++/11.2.0
+        --with-gxx-include-dir=/tools/$LFS_TGT/include/c++/15.2.0
     make
     make DESTDIR=$LFS install
 EOT
@@ -664,7 +664,7 @@ RUN --mount=type=tmpfs \
     make DESTDIR=$LFS install
 EOT
 
-# 6.18. GCC-11.2.0 - Pass 2
+# 6.18. GCC-15.2.0 - Pass 2
 RUN --mount=type=tmpfs \
     --mount=from=sources,source=gcc-15.2.0.tar.xz,target=gcc-15.2.0.tar.xz \
     --mount=from=sources,source=mpfr-4.2.2.tar.xz,target=mpfr-4.2.2.tar.xz \
@@ -829,7 +829,7 @@ ARG MAKEFLAGS
 
 WORKDIR /tmp
 
-# 7.7. Libstdc++ from GCC-11.2.0, Pass 2
+# 7.7. Libstdc++ from GCC-15.2.0, Pass 2
 RUN --mount=type=tmpfs \
     --mount=from=sources,source=gcc-15.2.0.tar.xz,target=gcc-15.2.0.tar.xz \
 <<'EOT' $SH
@@ -1453,7 +1453,7 @@ RUN <<'EOT' $SH
     passwd -d root
 EOT
 
-# 8.26. GCC-11.2.0
+# 8.26. GCC-15.2.0
 RUN --mount=type=tmpfs \
     --mount=from=sources,source=gcc-15.2.0.tar.xz,target=gcc-15.2.0.tar.xz \
 <<'EOT' $SH
@@ -1487,11 +1487,11 @@ RUN --mount=type=tmpfs \
         (su tester -c "PATH=$PATH make -k check" || true); \
     fi
     make install
-    rm -rf /usr/lib/gcc/$(gcc -dumpmachine)/11.2.0/include-fixed/bits/
+    rm -rf /usr/lib/gcc/$(gcc -dumpmachine)/15.2.0/include-fixed/bits/
     chown -v -R root:root \
-        /usr/lib/gcc/*linux-gnu/11.2.0/include{,-fixed}
+        /usr/lib/gcc/*linux-gnu/15.2.0/include{,-fixed}
     ln -svr /usr/bin/cpp /usr/lib
-    ln -sfv ../../libexec/gcc/$(gcc -dumpmachine)/11.2.0/liblto_plugin.so \
+    ln -sfv ../../libexec/gcc/$(gcc -dumpmachine)/15.2.0/liblto_plugin.so \
         /usr/lib/bfd-plugins/
     mkdir -pv /usr/share/gdb/auto-load/usr/lib
     mv -v /usr/lib/*gdb.py /usr/share/gdb/auto-load/usr/lib
