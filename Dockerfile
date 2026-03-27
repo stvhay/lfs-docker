@@ -1484,8 +1484,11 @@ RUN --mount=type=tmpfs \
         -e '/PATH=/{s@/sbin:@@;s@/bin:@@}'                \
         -i etc/login.defs
     touch /usr/bin/passwd
-    ./configure --sysconfdir=/etc \
-                --disable-static  \
+    ./configure --sysconfdir=/etc   \
+                --disable-static    \
+                --with-{b,yes}crypt \
+                --without-libbsd    \
+                --disable-logind    \
                 --with-group-name-max-length=32
     make
     make exec_prefix=/usr install

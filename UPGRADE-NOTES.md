@@ -113,6 +113,11 @@ Affected packages:
 ### GMP
 - Added `sed -i '/long long t1;/,+1s/()/(...)/' configure` for GCC 15 compatibility
 
+### Shadow
+- Added `--with-{b,yes}crypt` for bcrypt/yescrypt support
+- Added `--without-libbsd` to use internal readpassphrase
+- Added `--disable-logind` since systemd isn't available yet during build
+
 If other builds fail, check the LFS 13.0 book for instruction changes:
 https://www.linuxfromscratch.org/lfs/view/13.0-systemd/
 
