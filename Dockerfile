@@ -1643,8 +1643,8 @@ RUN --mount=type=tmpfs \
                 --with-pkg-config-libdir=/usr/lib/pkgconfig
     make
     make DESTDIR=$PWD/dest install
-    install -vm755 dest/usr/lib/libncursesw.so.6.3 /usr/lib
-    rm -v  dest/usr/lib/{libncursesw.so.6.3,libncurses++w.a}
+    install -vm755 dest/usr/lib/libncursesw.so.6.6 /usr/lib
+    rm -v  dest/usr/lib/{libncursesw.so.6.6,libncurses++w.a}
     cp -av dest/* /
     for lib in ncurses form panel menu; do \
         rm -vf                    /usr/lib/lib${lib}.so || exit 1; \
@@ -2549,12 +2549,12 @@ for LIB in $save_usrlib; do
 done
 
 online_usrbin="bash find strip"
-online_usrlib="libbfd-2.38.so
-               libhistory.so.8.1
-               libncursesw.so.6.3
+online_usrlib="libbfd-2.46.so
+               libhistory.so.8.3
+               libncursesw.so.6.6
                libm.so.6
-               libreadline.so.8.1
-               libz.so.1.2.12
+               libreadline.so.8.3
+               libz.so.1.3
                $(cd /usr/lib; find libnss*.so* -type f)"
 
 for BIN in $online_usrbin; do
