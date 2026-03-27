@@ -80,6 +80,9 @@ The following packages required build instruction changes beyond version updates
 - System build: added `--sysconfdir=/etc`, removed `--enable-gold`
 - System build: updated cleanup to remove gprofng/sframe files
 
+### GCC hardcoded paths
+- Updated hardcoded GCC version paths from 11.2.0 to 15.2.0 (mkheaders, include dirs, etc.)
+
 If other builds fail, check the LFS 13.0 book for instruction changes:
 https://www.linuxfromscratch.org/lfs/view/13.0-systemd/
 
