@@ -1378,6 +1378,8 @@ RUN --mount=type=tmpfs \
 <<'EOT' $SH
     tar -xf gmp-6.3.0.tar.xz
     cd gmp-6.3.0
+    # Fix for GCC 15 compatibility
+    sed -i '/long long t1;/,+1s/()/(...)/' configure
     cp -v configfsf.guess config.guess
     cp -v configfsf.sub   config.sub
     ./configure --prefix=/usr    \

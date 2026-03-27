@@ -110,6 +110,9 @@ Affected packages:
 - Changed `CC=gcc` to `CC='gcc -std=c99'` to fix GCC 15 compatibility with true/false macros
 - Added `-r` option to configure
 
+### GMP
+- Added `sed -i '/long long t1;/,+1s/()/(...)/' configure` for GCC 15 compatibility
+
 If other builds fail, check the LFS 13.0 book for instruction changes:
 https://www.linuxfromscratch.org/lfs/view/13.0-systemd/
 
@@ -122,3 +125,4 @@ https://www.linuxfromscratch.org/lfs/view/13.0-systemd/
 5. **busybox source changed** - Now uses Alpine's busybox-static package instead of downloading from busybox.net (which has TLS timeout issues)
 6. **Tcl source URL format changed** - Now uses `sourceforge.net/projects/tcl/files/.../download` suffix instead of `downloads.sourceforge.net/tcl/` due to Docker ADD redirect issues
 7. **Tcl bundled packages updated** - tdbc changed from 1.1.3 to 1.1.12, itcl changed from 4.2.2 to 4.3.4
+8. **Expect source URL format changed** - Same SourceForge redirect issue as Tcl
