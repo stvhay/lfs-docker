@@ -432,33 +432,39 @@ RUN --mount=type=tmpfs \
     make DESTDIR=$LFS install
 EOT
 
-# 6.3. Ncurses-6.3
+# 6.3. Ncurses-6.6
 RUN --mount=type=tmpfs \
     --mount=from=sources,source=ncurses-6.6.tar.gz,target=ncurses-6.6.tar.gz \
 <<'EOT' $SH
     tar -xf ncurses-6.6.tar.gz
     cd ncurses-6.6
     sed -i s/mawk// configure
+    # First build tic for the host and install it
     mkdir build
     pushd build
-    ../configure
+    ../configure --prefix=$LFS/tools AWK=gawk
     make -C include
     make -C progs tic
+    install progs/tic $LFS/tools/bin
     popd
+    # Now cross-compile ncurses
     ./configure --prefix=/usr                \
                 --host=$LFS_TGT              \
                 --build=$(./config.guess)    \
                 --mandir=/usr/share/man      \
                 --with-manpage-format=normal \
                 --with-shared                \
+                --without-normal             \
+                --with-cxx-shared            \
                 --without-debug              \
                 --without-ada                \
-                --without-normal             \
                 --disable-stripping          \
-                --enable-widec
+                AWK=gawk
     make
-    make DESTDIR=$LFS TIC_PATH=$(pwd)/build/progs/tic install
-    echo "INPUT(-lncursesw)" > $LFS/usr/lib/libncurses.so
+    make DESTDIR=$LFS install
+    ln -sv libncursesw.so $LFS/usr/lib/libncurses.so
+    sed -e 's/^#if.*XOPEN.*$/#if 1/' \
+        -i $LFS/usr/include/curses.h
 EOT
 
 # 6.4. Bash-5.1.16
