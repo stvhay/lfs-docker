@@ -86,7 +86,7 @@ ARG BUSYBOX_ARCH
 # COPY --chmod=744 sources/inetutils-2.7.tar.gz .
 # COPY --chmod=744 sources/intltool-0.51.0.tar.gz .
 # COPY --chmod=744 sources/iproute2-6.18.0.tar.xz .
-# COPY --chmod=744 sources/Jinja2-3.1.6.tar.gz .
+# COPY --chmod=744 sources/jinja2-3.1.6.tar.gz .
 # COPY --chmod=744 sources/kbd-2.9.0.tar.xz .
 # COPY --chmod=744 sources/kmod-34.2.tar.xz .
 # COPY --chmod=744 sources/less-692.tar.gz .
@@ -174,7 +174,7 @@ ADD --chmod=744 ${SOURCES_MIRROR:-https://github.com/Mic92/iana-etc/releases/dow
 ADD --chmod=744 ${SOURCES_MIRROR:-https://ftp.gnu.org/gnu/inetutils/}inetutils-2.7.tar.gz .
 ADD --chmod=744 ${SOURCES_MIRROR:-https://launchpad.net/intltool/trunk/0.51.0/+download/}intltool-0.51.0.tar.gz .
 ADD --chmod=744 ${SOURCES_MIRROR:-https://www.kernel.org/pub/linux/utils/net/iproute2/}iproute2-6.18.0.tar.xz .
-ADD --chmod=744 ${SOURCES_MIRROR:-https://files.pythonhosted.org/packages/source/J/Jinja2/}Jinja2-3.1.6.tar.gz .
+ADD --chmod=744 ${SOURCES_MIRROR:-https://pypi.org/packages/source/J/Jinja2/}jinja2-3.1.6.tar.gz .
 ADD --chmod=744 ${SOURCES_MIRROR:-https://www.kernel.org/pub/linux/utils/kbd/}kbd-2.9.0.tar.xz .
 ADD --chmod=744 ${SOURCES_MIRROR:-https://www.kernel.org/pub/linux/utils/kernel/kmod/}kmod-34.2.tar.xz .
 ADD --chmod=744 ${SOURCES_MIRROR:-https://www.greenwoodsoftware.com/less/}less-692.tar.gz .
@@ -2195,10 +2195,10 @@ EOT
 
 # 8.70. Jinja2-3.1.6
 RUN --mount=type=tmpfs \
-    --mount=from=sources,source=Jinja2-3.1.6.tar.gz,target=Jinja2-3.1.6.tar.gz \
+    --mount=from=sources,source=jinja2-3.1.6.tar.gz,target=jinja2-3.1.6.tar.gz \
 <<'EOT' $SH
-    tar -xf Jinja2-3.1.6.tar.gz
-    cd Jinja2-3.1.6
+    tar -xf jinja2-3.1.6.tar.gz
+    cd jinja2-3.1.6
     python3 setup.py install --optimize=1
 EOT
 
