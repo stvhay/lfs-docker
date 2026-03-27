@@ -99,7 +99,7 @@ ARG BUSYBOX_ARCH
 # COPY --chmod=744 sources/make-4.4.1.tar.gz .
 # COPY --chmod=744 sources/man-db-2.13.1.tar.xz .
 # COPY --chmod=744 sources/man-pages-6.17.tar.xz .
-# COPY --chmod=744 sources/MarkupSafe-3.0.3.tar.gz .
+# COPY --chmod=744 sources/markupsafe-3.0.3.tar.gz .
 # COPY --chmod=744 sources/meson-1.10.1.tar.gz .
 # COPY --chmod=744 sources/mpc-1.3.1.tar.gz .
 # COPY --chmod=744 sources/mpfr-4.2.2.tar.xz .
@@ -182,12 +182,12 @@ ADD --chmod=744 ${SOURCES_MIRROR:-https://www.kernel.org/pub/linux/libs/security
 ADD --chmod=744 ${SOURCES_MIRROR:-https://github.com/libffi/libffi/releases/download/v3.5.2/}libffi-3.5.2.tar.gz .
 ADD --chmod=744 ${SOURCES_MIRROR:-https://download.savannah.gnu.org/releases/libpipeline/}libpipeline-1.5.8.tar.gz .
 ADD --chmod=744 ${SOURCES_MIRROR:-https://ftp.gnu.org/gnu/libtool/}libtool-2.5.4.tar.xz .
-ADD --chmod=744 ${SOURCES_MIRROR:-https://www.kernel.org/pub/linux/kernel/v5.x/}linux-6.18.10.tar.xz .
+ADD --chmod=744 ${SOURCES_MIRROR:-https://www.kernel.org/pub/linux/kernel/v6.x/}linux-6.18.10.tar.xz .
 ADD --chmod=744 ${SOURCES_MIRROR:-https://ftp.gnu.org/gnu/m4/}m4-1.4.21.tar.xz .
 ADD --chmod=744 ${SOURCES_MIRROR:-https://ftp.gnu.org/gnu/make/}make-4.4.1.tar.gz .
 ADD --chmod=744 ${SOURCES_MIRROR:-https://download.savannah.gnu.org/releases/man-db/}man-db-2.13.1.tar.xz .
 ADD --chmod=744 ${SOURCES_MIRROR:-https://www.kernel.org/pub/linux/docs/man-pages/}man-pages-6.17.tar.xz .
-ADD --chmod=744 ${SOURCES_MIRROR:-https://files.pythonhosted.org/packages/source/M/MarkupSafe/}MarkupSafe-3.0.3.tar.gz .
+ADD --chmod=744 ${SOURCES_MIRROR:-https://pypi.org/packages/source/M/MarkupSafe/}markupsafe-3.0.3.tar.gz .
 ADD --chmod=744 ${SOURCES_MIRROR:-https://github.com/mesonbuild/meson/releases/download/1.10.1/}meson-1.10.1.tar.gz .
 ADD --chmod=744 ${SOURCES_MIRROR:-https://ftp.gnu.org/gnu/mpc/}mpc-1.3.1.tar.gz .
 ADD --chmod=744 ${SOURCES_MIRROR:-https://www.mpfr.org/mpfr-4.2.2/}mpfr-4.2.2.tar.xz .
@@ -2183,12 +2183,12 @@ if (&term == "xterm") || (&term == "putty")
 endif
 EOT
 
-# 8.69. MarkupSafe-3.0.3
+# 8.69. markupsafe-3.0.3
 RUN --mount=type=tmpfs \
-    --mount=from=sources,source=MarkupSafe-3.0.3.tar.gz,target=MarkupSafe-3.0.3.tar.gz \
+    --mount=from=sources,source=markupsafe-3.0.3.tar.gz,target=markupsafe-3.0.3.tar.gz \
 <<'EOT' $SH
-    tar -xf MarkupSafe-3.0.3.tar.gz
-    cd MarkupSafe-3.0.3
+    tar -xf markupsafe-3.0.3.tar.gz
+    cd markupsafe-3.0.3
     python3 setup.py build
     python3 setup.py install --optimize=1
 EOT
