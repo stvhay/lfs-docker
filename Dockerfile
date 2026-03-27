@@ -56,7 +56,7 @@ ARG BUSYBOX_ARCH
 # COPY --chmod=744 sources/automake-1.16.5.tar.xz .
 # COPY --chmod=744 sources/bash-5.1.16.tar.gz .
 # COPY --chmod=744 sources/bc-5.2.2.tar.xz .
-# COPY --chmod=744 sources/binutils-2.38.tar.xz .
+# COPY --chmod=744 sources/binutils-2.46.0.tar.xz .
 # COPY --chmod=744 sources/bison-3.8.2.tar.xz .
 # COPY --chmod=744 sources/bzip2-1.0.8.tar.gz .
 # COPY --chmod=744 sources/check-0.15.2.tar.gz .
@@ -73,10 +73,10 @@ ARG BUSYBOX_ARCH
 # COPY --chmod=744 sources/findutils-4.9.0.tar.xz .
 # COPY --chmod=744 sources/flex-2.6.4.tar.gz .
 # COPY --chmod=744 sources/gawk-5.1.1.tar.xz .
-# COPY --chmod=744 sources/gcc-11.2.0.tar.xz .
+# COPY --chmod=744 sources/gcc-15.2.0.tar.xz .
 # COPY --chmod=744 sources/gdbm-1.23.tar.gz .
-# COPY --chmod=744 sources/gettext-0.21.tar.xz .
-# COPY --chmod=744 sources/glibc-2.35.tar.xz .
+# COPY --chmod=744 sources/gettext-1.0.tar.xz .
+# COPY --chmod=744 sources/glibc-2.43.tar.xz .
 # COPY --chmod=744 sources/gmp-6.2.1.tar.xz .
 # COPY --chmod=744 sources/gperf-3.1.tar.gz .
 # COPY --chmod=744 sources/grep-3.7.tar.xz .
@@ -96,13 +96,13 @@ ARG BUSYBOX_ARCH
 # COPY --chmod=744 sources/libffi-3.4.2.tar.gz .
 # COPY --chmod=744 sources/libpipeline-1.5.5.tar.gz .
 # COPY --chmod=744 sources/libtool-2.4.6.tar.xz .
-# COPY --chmod=744 sources/linux-5.16.9.tar.xz .
+# COPY --chmod=744 sources/linux-6.18.10.tar.xz .
 # COPY --chmod=744 sources/m4-1.4.19.tar.xz .
 # COPY --chmod=744 sources/make-4.3.tar.gz .
 # COPY --chmod=744 sources/man-db-2.10.1.tar.xz .
 # COPY --chmod=744 sources/man-pages-5.13.tar.xz .
 # COPY --chmod=744 sources/MarkupSafe-2.0.1.tar.gz .
-# COPY --chmod=744 sources/meson-0.61.1.tar.gz .
+# COPY --chmod=744 sources/meson-1.10.1.tar.gz .
 # COPY --chmod=744 sources/mpc-1.2.1.tar.gz .
 # COPY --chmod=744 sources/mpfr-4.1.0.tar.xz .
 # COPY --chmod=744 sources/ncurses-6.3.tar.gz .
@@ -113,8 +113,8 @@ ARG BUSYBOX_ARCH
 # COPY --chmod=744 sources/pkg-config-0.29.2.tar.gz .
 # COPY --chmod=744 sources/procps-ng-3.3.17.tar.xz .
 # COPY --chmod=744 sources/psmisc-23.4.tar.xz .
-# COPY --chmod=744 sources/Python-3.10.2.tar.xz .
-# COPY --chmod=744 sources/python-3.10.2-docs-html.tar.bz2 .
+# COPY --chmod=744 sources/Python-3.14.3.tar.xz .
+# COPY --chmod=744 sources/python-3.14.3-docs-html.tar.bz2 .
 # COPY --chmod=744 sources/readline-8.1.2.tar.gz .
 # COPY --chmod=744 sources/sed-4.8.tar.xz .
 # COPY --chmod=744 sources/shadow-4.11.1.tar.xz .
@@ -134,11 +134,11 @@ ARG BUSYBOX_ARCH
 # COPY --chmod=744 sources/xz-5.2.5.tar.xz .
 # COPY --chmod=744 sources/zlib-1.2.12.tar.xz .
 # COPY --chmod=744 sources/zstd-1.5.2.tar.gz .
-# COPY --chmod=744 sources/binutils-2.38-lto_fix-1.patch .
+# COPY --chmod=744 sources/binutils-2.46.0-lto_fix-1.patch .
 # COPY --chmod=744 sources/bzip2-1.0.8-install_docs-1.patch .
 # COPY --chmod=744 sources/coreutils-9.0-i18n-1.patch .
 # COPY --chmod=744 sources/coreutils-9.0-chmod_fix-1.patch .
-# COPY --chmod=744 sources/glibc-2.35-fhs-1.patch .
+# COPY --chmod=744 sources/glibc-2.43-fhs-1.patch .
 # COPY --chmod=744 sources/kbd-2.4.0-backspace-1.patch .
 # COPY --chmod=744 sources/perl-5.34.0-upstream_fixes-1.patch .
 # COPY --chmod=744 sources/sysvinit-3.01-consolidated-1.patch .
@@ -153,7 +153,7 @@ ADD --chmod=744 ${SOURCES_MIRROR:-https://ftp.gnu.org/gnu/autoconf/}autoconf-2.7
 ADD --chmod=744 ${SOURCES_MIRROR:-https://ftp.gnu.org/gnu/automake/}automake-1.16.5.tar.xz .
 ADD --chmod=744 ${SOURCES_MIRROR:-https://ftp.gnu.org/gnu/bash/}bash-5.1.16.tar.gz .
 ADD --chmod=744 ${SOURCES_MIRROR:-https://github.com/gavinhoward/bc/releases/download/5.2.2/}bc-5.2.2.tar.xz .
-ADD --chmod=744 ${SOURCES_MIRROR:-https://ftp.gnu.org/gnu/binutils/}binutils-2.38.tar.xz .
+ADD --chmod=744 ${SOURCES_MIRROR:-https://ftp.gnu.org/gnu/binutils/}binutils-2.46.0.tar.xz .
 ADD --chmod=744 ${SOURCES_MIRROR:-https://ftp.gnu.org/gnu/bison/}bison-3.8.2.tar.xz .
 ADD --chmod=744 ${SOURCES_MIRROR:-https://www.sourceware.org/pub/bzip2/}bzip2-1.0.8.tar.gz .
 ADD --chmod=744 ${SOURCES_MIRROR:-https://github.com/libcheck/check/releases/download/0.15.2/}check-0.15.2.tar.gz .
@@ -170,10 +170,10 @@ ADD --chmod=744 ${SOURCES_MIRROR:-https://astron.com/pub/file/}file-5.41.tar.gz 
 ADD --chmod=744 ${SOURCES_MIRROR:-https://ftp.gnu.org/gnu/findutils/}findutils-4.9.0.tar.xz .
 ADD --chmod=744 ${SOURCES_MIRROR:-https://github.com/westes/flex/releases/download/v2.6.4/}flex-2.6.4.tar.gz .
 ADD --chmod=744 ${SOURCES_MIRROR:-https://ftp.gnu.org/gnu/gawk/}gawk-5.1.1.tar.xz .
-ADD --chmod=744 ${SOURCES_MIRROR:-https://ftp.gnu.org/gnu/gcc/gcc-11.2.0/}gcc-11.2.0.tar.xz .
+ADD --chmod=744 ${SOURCES_MIRROR:-https://ftp.gnu.org/gnu/gcc/gcc-15.2.0/}gcc-15.2.0.tar.xz .
 ADD --chmod=744 ${SOURCES_MIRROR:-https://ftp.gnu.org/gnu/gdbm/}gdbm-1.23.tar.gz .
-ADD --chmod=744 ${SOURCES_MIRROR:-https://ftp.gnu.org/gnu/gettext/}gettext-0.21.tar.xz .
-ADD --chmod=744 ${SOURCES_MIRROR:-https://ftp.gnu.org/gnu/glibc/}glibc-2.35.tar.xz .
+ADD --chmod=744 ${SOURCES_MIRROR:-https://ftp.gnu.org/gnu/gettext/}gettext-1.0.tar.xz .
+ADD --chmod=744 ${SOURCES_MIRROR:-https://ftp.gnu.org/gnu/glibc/}glibc-2.43.tar.xz .
 ADD --chmod=744 ${SOURCES_MIRROR:-https://ftp.gnu.org/gnu/gmp/}gmp-6.2.1.tar.xz .
 ADD --chmod=744 ${SOURCES_MIRROR:-https://ftp.gnu.org/gnu/gperf/}gperf-3.1.tar.gz .
 ADD --chmod=744 ${SOURCES_MIRROR:-https://ftp.gnu.org/gnu/grep/}grep-3.7.tar.xz .
@@ -193,13 +193,13 @@ ADD --chmod=744 ${SOURCES_MIRROR:-https://www.kernel.org/pub/linux/libs/security
 ADD --chmod=744 ${SOURCES_MIRROR:-https://github.com/libffi/libffi/releases/download/v3.4.2/}libffi-3.4.2.tar.gz .
 ADD --chmod=744 ${SOURCES_MIRROR:-https://download.savannah.gnu.org/releases/libpipeline/}libpipeline-1.5.5.tar.gz .
 ADD --chmod=744 ${SOURCES_MIRROR:-https://ftp.gnu.org/gnu/libtool/}libtool-2.4.6.tar.xz .
-ADD --chmod=744 ${SOURCES_MIRROR:-https://www.kernel.org/pub/linux/kernel/v5.x/}linux-5.16.9.tar.xz .
+ADD --chmod=744 ${SOURCES_MIRROR:-https://www.kernel.org/pub/linux/kernel/v5.x/}linux-6.18.10.tar.xz .
 ADD --chmod=744 ${SOURCES_MIRROR:-https://ftp.gnu.org/gnu/m4/}m4-1.4.19.tar.xz .
 ADD --chmod=744 ${SOURCES_MIRROR:-https://ftp.gnu.org/gnu/make/}make-4.3.tar.gz .
 ADD --chmod=744 ${SOURCES_MIRROR:-https://download.savannah.gnu.org/releases/man-db/}man-db-2.10.1.tar.xz .
 ADD --chmod=744 ${SOURCES_MIRROR:-https://www.kernel.org/pub/linux/docs/man-pages/}man-pages-5.13.tar.xz .
 ADD --chmod=744 ${SOURCES_MIRROR:-https://files.pythonhosted.org/packages/source/M/MarkupSafe/}MarkupSafe-2.0.1.tar.gz .
-ADD --chmod=744 ${SOURCES_MIRROR:-https://github.com/mesonbuild/meson/releases/download/0.61.1/}meson-0.61.1.tar.gz .
+ADD --chmod=744 ${SOURCES_MIRROR:-https://github.com/mesonbuild/meson/releases/download/0.61.1/}meson-1.10.1.tar.gz .
 ADD --chmod=744 ${SOURCES_MIRROR:-https://ftp.gnu.org/gnu/mpc/}mpc-1.2.1.tar.gz .
 ADD --chmod=744 ${SOURCES_MIRROR:-https://www.mpfr.org/mpfr-4.1.0/}mpfr-4.1.0.tar.xz .
 ADD --chmod=744 ${SOURCES_MIRROR:-https://invisible-mirror.net/archives/ncurses/}ncurses-6.3.tar.gz .
@@ -210,8 +210,8 @@ ADD --chmod=744 ${SOURCES_MIRROR:-https://www.cpan.org/src/5.0/}perl-5.34.0.tar.
 ADD --chmod=744 ${SOURCES_MIRROR:-https://pkg-config.freedesktop.org/releases/}pkg-config-0.29.2.tar.gz .
 ADD --chmod=744 ${SOURCES_MIRROR:-https://sourceforge.net/projects/procps-ng/files/Production/}procps-ng-3.3.17.tar.xz .
 ADD --chmod=744 ${SOURCES_MIRROR:-https://sourceforge.net/projects/psmisc/files/psmisc/}psmisc-23.4.tar.xz .
-ADD --chmod=744 ${SOURCES_MIRROR:-https://www.python.org/ftp/python/3.10.2/}Python-3.10.2.tar.xz .
-ADD --chmod=744 ${SOURCES_MIRROR:-https://www.python.org/ftp/python/doc/3.10.2/}python-3.10.2-docs-html.tar.bz2 .
+ADD --chmod=744 ${SOURCES_MIRROR:-https://www.python.org/ftp/python/3.10.2/}Python-3.14.3.tar.xz .
+ADD --chmod=744 ${SOURCES_MIRROR:-https://www.python.org/ftp/python/doc/3.10.2/}python-3.14.3-docs-html.tar.bz2 .
 ADD --chmod=744 ${SOURCES_MIRROR:-https://ftp.gnu.org/gnu/readline/}readline-8.1.2.tar.gz .
 ADD --chmod=744 ${SOURCES_MIRROR:-https://ftp.gnu.org/gnu/sed/}sed-4.8.tar.xz .
 ADD --chmod=744 ${SOURCES_MIRROR:-https://github.com/shadow-maint/shadow/releases/download/v4.11.1/}shadow-4.11.1.tar.xz .
@@ -231,11 +231,11 @@ ADD --chmod=744 ${SOURCES_MIRROR:-https://cpan.metacpan.org/authors/id/T/TO/TODD
 ADD --chmod=744 ${SOURCES_MIRROR:-https://tukaani.org/xz/}xz-5.2.5.tar.xz .
 ADD --chmod=744 ${SOURCES_MIRROR:-https://zlib.net/}zlib-1.2.12.tar.xz .
 ADD --chmod=744 ${SOURCES_MIRROR:-https://github.com/facebook/zstd/releases/download/v1.5.2/}zstd-1.5.2.tar.gz .
-ADD --chmod=744 ${SOURCES_MIRROR:-https://www.linuxfromscratch.org/patches/lfs/11.1/}binutils-2.38-lto_fix-1.patch .
+ADD --chmod=744 ${SOURCES_MIRROR:-https://www.linuxfromscratch.org/patches/lfs/11.1/}binutils-2.46.0-lto_fix-1.patch .
 ADD --chmod=744 ${SOURCES_MIRROR:-https://www.linuxfromscratch.org/patches/lfs/11.1/}bzip2-1.0.8-install_docs-1.patch .
 ADD --chmod=744 ${SOURCES_MIRROR:-https://www.linuxfromscratch.org/patches/lfs/11.1/}coreutils-9.0-i18n-1.patch .
 ADD --chmod=744 ${SOURCES_MIRROR:-https://www.linuxfromscratch.org/patches/lfs/11.1/}coreutils-9.0-chmod_fix-1.patch .
-ADD --chmod=744 ${SOURCES_MIRROR:-https://www.linuxfromscratch.org/patches/lfs/11.1/}glibc-2.35-fhs-1.patch .
+ADD --chmod=744 ${SOURCES_MIRROR:-https://www.linuxfromscratch.org/patches/lfs/11.1/}glibc-2.43-fhs-1.patch .
 ADD --chmod=744 ${SOURCES_MIRROR:-https://www.linuxfromscratch.org/patches/lfs/11.1/}kbd-2.4.0-backspace-1.patch .
 ADD --chmod=744 ${SOURCES_MIRROR:-https://www.linuxfromscratch.org/patches/lfs/11.1/}perl-5.34.0-upstream_fixes-1.patch .
 ADD --chmod=744 ${SOURCES_MIRROR:-https://www.linuxfromscratch.org/patches/lfs/11.1/}sysvinit-3.01-consolidated-1.patch .
@@ -299,10 +299,10 @@ WORKDIR /tmp
 
 # 5.2. Binutils-2.38 - Pass 1
 RUN --mount=type=tmpfs \
-    --mount=from=sources,source=binutils-2.38.tar.xz,target=binutils-2.38.tar.xz \
+    --mount=from=sources,source=binutils-2.46.0.tar.xz,target=binutils-2.46.0.tar.xz \
 <<'EOT' $SH
-    tar -xf binutils-2.38.tar.xz
-    cd binutils-2.38
+    tar -xf binutils-2.46.0.tar.xz
+    cd binutils-2.46.0
     mkdir -v build
     cd build
     ../configure --prefix=$LFS/tools \
@@ -316,13 +316,13 @@ EOT
 
 # 5.3. GCC-11.2.0 - Pass 1
 RUN --mount=type=tmpfs \
-    --mount=from=sources,source=gcc-11.2.0.tar.xz,target=gcc-11.2.0.tar.xz \
+    --mount=from=sources,source=gcc-15.2.0.tar.xz,target=gcc-15.2.0.tar.xz \
     --mount=from=sources,source=mpfr-4.1.0.tar.xz,target=mpfr-4.1.0.tar.xz \
     --mount=from=sources,source=gmp-6.2.1.tar.xz,target=gmp-6.2.1.tar.xz \
     --mount=from=sources,source=mpc-1.2.1.tar.gz,target=mpc-1.2.1.tar.gz \
 <<'EOT' $SH
-    tar -xf gcc-11.2.0.tar.xz
-    cd gcc-11.2.0
+    tar -xf gcc-15.2.0.tar.xz
+    cd gcc-15.2.0
     tar -xf ../mpfr-4.1.0.tar.xz
     mv -v mpfr-4.1.0 mpfr
     tar -xf ../gmp-6.2.1.tar.xz
@@ -370,10 +370,10 @@ EOT
 
 # 5.4. Linux-5.16.9 API Headers
 RUN --mount=type=tmpfs \
-    --mount=from=sources,source=linux-5.16.9.tar.xz,target=linux-5.16.9.tar.xz \
+    --mount=from=sources,source=linux-6.18.10.tar.xz,target=linux-6.18.10.tar.xz \
 <<'EOT' $SH
-    tar -xf linux-5.16.9.tar.xz
-    cd linux-5.16.9
+    tar -xf linux-6.18.10.tar.xz
+    cd linux-6.18.10
     make mrproper
     make headers
     find usr/include -name '.*' -delete
@@ -383,11 +383,11 @@ EOT
 
 # 5.5. Glibc-2.35
 RUN --mount=type=tmpfs \
-    --mount=from=sources,source=glibc-2.35.tar.xz,target=glibc-2.35.tar.xz \
-    --mount=from=sources,source=glibc-2.35-fhs-1.patch,target=glibc-2.35-fhs-1.patch \
+    --mount=from=sources,source=glibc-2.43.tar.xz,target=glibc-2.43.tar.xz \
+    --mount=from=sources,source=glibc-2.43-fhs-1.patch,target=glibc-2.43-fhs-1.patch \
 <<'EOT' $SH
-    tar -xf glibc-2.35.tar.xz
-    cd glibc-2.35
+    tar -xf glibc-2.43.tar.xz
+    cd glibc-2.43
     case $LFS_ARCH in
         x86_64)
             ln -sfv ../lib/ld-linux-x86-64.so.2 $LFS/lib64
@@ -398,7 +398,7 @@ RUN --mount=type=tmpfs \
             ln -sfv ../lib/ld-linux-aarch64.so.1 $LFS/lib64/ld-lsb-aarch64.so.3
             ;;
     esac
-    patch -Np1 -i ../glibc-2.35-fhs-1.patch
+    patch -Np1 -i ../glibc-2.43-fhs-1.patch
     mkdir -v build
     cd build
     echo "rootsbindir=/usr/sbin" > configparms
@@ -417,10 +417,10 @@ EOT
 
 # 5.6. Libstdc++ from GCC-11.2.0, Pass 1
 RUN --mount=type=tmpfs \
-    --mount=from=sources,source=gcc-11.2.0.tar.xz,target=gcc-11.2.0.tar.xz \
+    --mount=from=sources,source=gcc-15.2.0.tar.xz,target=gcc-15.2.0.tar.xz \
 <<'EOT' $SH
-    tar -xf gcc-11.2.0.tar.xz
-    pushd gcc-11.2.0
+    tar -xf gcc-15.2.0.tar.xz
+    pushd gcc-15.2.0
     mkdir -v build
     cd build
     ../libstdc++-v3/configure      \
@@ -659,10 +659,10 @@ EOT
 
 # 6.17. Binutils-2.38 - Pass 2
 RUN --mount=type=tmpfs \
-    --mount=from=sources,source=binutils-2.38.tar.xz,target=binutils-2.38.tar.xz \
+    --mount=from=sources,source=binutils-2.46.0.tar.xz,target=binutils-2.46.0.tar.xz \
 <<'EOT' $SH
-    tar -xf binutils-2.38.tar.xz
-    cd binutils-2.38
+    tar -xf binutils-2.46.0.tar.xz
+    cd binutils-2.46.0
     sed '6009s/$add_dir//' -i ltmain.sh
     mkdir -v build
     cd build
@@ -679,13 +679,13 @@ EOT
 
 # 6.18. GCC-11.2.0 - Pass 2
 RUN --mount=type=tmpfs \
-    --mount=from=sources,source=gcc-11.2.0.tar.xz,target=gcc-11.2.0.tar.xz \
+    --mount=from=sources,source=gcc-15.2.0.tar.xz,target=gcc-15.2.0.tar.xz \
     --mount=from=sources,source=mpfr-4.1.0.tar.xz,target=mpfr-4.1.0.tar.xz \
     --mount=from=sources,source=gmp-6.2.1.tar.xz,target=gmp-6.2.1.tar.xz \
     --mount=from=sources,source=mpc-1.2.1.tar.gz,target=mpc-1.2.1.tar.gz \
 <<'EOT' $SH
-    tar -xf gcc-11.2.0.tar.xz
-    cd gcc-11.2.0
+    tar -xf gcc-15.2.0.tar.xz
+    cd gcc-15.2.0
     tar -xf ../mpfr-4.1.0.tar.xz
     mv -v mpfr-4.1.0 mpfr
     tar -xf ../gmp-6.2.1.tar.xz
@@ -844,10 +844,10 @@ WORKDIR /tmp
 
 # 7.7. Libstdc++ from GCC-11.2.0, Pass 2
 RUN --mount=type=tmpfs \
-    --mount=from=sources,source=gcc-11.2.0.tar.xz,target=gcc-11.2.0.tar.xz \
+    --mount=from=sources,source=gcc-15.2.0.tar.xz,target=gcc-15.2.0.tar.xz \
 <<'EOT' $SH
-    tar -xf gcc-11.2.0.tar.xz
-    cd gcc-11.2.0
+    tar -xf gcc-15.2.0.tar.xz
+    cd gcc-15.2.0
     ln -s gthr-posix.h libgcc/gthr-default.h
     mkdir -v build
     cd build
@@ -864,10 +864,10 @@ EOT
 
 # 7.8. Gettext-0.21
 RUN --mount=type=tmpfs \
-    --mount=from=sources,source=gettext-0.21.tar.xz,target=gettext-0.21.tar.xz \
+    --mount=from=sources,source=gettext-1.0.tar.xz,target=gettext-1.0.tar.xz \
 <<'EOT' $SH
-    tar -xf gettext-0.21.tar.xz
-    cd gettext-0.21
+    tar -xf gettext-1.0.tar.xz
+    cd gettext-1.0
     ./configure --disable-shared
     make
     cp -v gettext-tools/src/{msgfmt,msgmerge,xgettext} /usr/bin
@@ -904,12 +904,12 @@ RUN --mount=type=tmpfs \
     make install
 EOT
 
-# 7.11. Python-3.10.2
+# 7.11. Python-3.14.3
 RUN --mount=type=tmpfs \
-    --mount=from=sources,source=Python-3.10.2.tar.xz,target=Python-3.10.2.tar.xz \
+    --mount=from=sources,source=Python-3.14.3.tar.xz,target=Python-3.14.3.tar.xz \
 <<'EOT' $SH
-    tar -xf Python-3.10.2.tar.xz
-    cd Python-3.10.2
+    tar -xf Python-3.14.3.tar.xz
+    cd Python-3.14.3
     ./configure --prefix=/usr   \
                 --enable-shared \
                 --without-ensurepip
@@ -996,12 +996,12 @@ EOT
 # 8.5. Glibc-2.35
 # TODO: make the result of `make check` more visible
 RUN --mount=type=tmpfs \
-    --mount=from=sources,source=glibc-2.35.tar.xz,target=glibc-2.35.tar.xz \
-    --mount=from=sources,source=glibc-2.35-fhs-1.patch,target=glibc-2.35-fhs-1.patch \
+    --mount=from=sources,source=glibc-2.43.tar.xz,target=glibc-2.43.tar.xz \
+    --mount=from=sources,source=glibc-2.43-fhs-1.patch,target=glibc-2.43-fhs-1.patch \
 <<'EOT' $SH
-    tar -xf glibc-2.35.tar.xz
-    cd glibc-2.35
-    patch -Np1 -i ../glibc-2.35-fhs-1.patch
+    tar -xf glibc-2.43.tar.xz
+    cd glibc-2.43
+    patch -Np1 -i ../glibc-2.43-fhs-1.patch
     mkdir -v build
     cd build
     echo "rootsbindir=/usr/sbin" > configparms
@@ -1306,12 +1306,12 @@ EOT
 # 8.18. Binutils-2.38
 # NOTE: skipping the PTY test here since we don't have any during docker build
 RUN --mount=type=tmpfs \
-    --mount=from=sources,source=binutils-2.38.tar.xz,target=binutils-2.38.tar.xz \
-    --mount=from=sources,source=binutils-2.38-lto_fix-1.patch,target=binutils-2.38-lto_fix-1.patch \
+    --mount=from=sources,source=binutils-2.46.0.tar.xz,target=binutils-2.46.0.tar.xz \
+    --mount=from=sources,source=binutils-2.46.0-lto_fix-1.patch,target=binutils-2.46.0-lto_fix-1.patch \
 <<'EOT' $SH
-    tar -xf binutils-2.38.tar.xz
-    cd binutils-2.38
-    patch -Np1 -i ../binutils-2.38-lto_fix-1.patch
+    tar -xf binutils-2.46.0.tar.xz
+    cd binutils-2.46.0
+    patch -Np1 -i ../binutils-2.46.0-lto_fix-1.patch
     case $LFS_ARCH in
         x86_64)
             sed -e '/R_386_TLS_LE /i \   || (TYPE) == R_386_TLS_IE \\' \
@@ -1465,10 +1465,10 @@ EOT
 
 # 8.26. GCC-11.2.0
 RUN --mount=type=tmpfs \
-    --mount=from=sources,source=gcc-11.2.0.tar.xz,target=gcc-11.2.0.tar.xz \
+    --mount=from=sources,source=gcc-15.2.0.tar.xz,target=gcc-15.2.0.tar.xz \
 <<'EOT' $SH
-    tar -xf gcc-11.2.0.tar.xz
-    cd gcc-11.2.0
+    tar -xf gcc-15.2.0.tar.xz
+    cd gcc-15.2.0
     sed -e '/static.*SIGSTKSZ/d' \
         -e 's/return kAltStackSize/return SIGSTKSZ * 4/' \
         -i libsanitizer/sanitizer_common/sanitizer_posix_libcdep.cpp
@@ -1584,13 +1584,13 @@ EOT
 
 # 8.31. Gettext-0.21
 RUN --mount=type=tmpfs \
-    --mount=from=sources,source=gettext-0.21.tar.xz,target=gettext-0.21.tar.xz \
+    --mount=from=sources,source=gettext-1.0.tar.xz,target=gettext-1.0.tar.xz \
 <<'EOT' $SH
-    tar -xf gettext-0.21.tar.xz
-    cd gettext-0.21
+    tar -xf gettext-1.0.tar.xz
+    cd gettext-1.0
     ./configure --prefix=/usr    \
                 --disable-static \
-                --docdir=/usr/share/doc/gettext-0.21
+                --docdir=/usr/share/doc/gettext-1.0
     make
     if $ENABLE_TESTS; then make check; fi
     make install
@@ -1873,13 +1873,13 @@ RUN --mount=type=tmpfs \
     make install
 EOT
 
-# 8.50. Python-3.10.2
+# 8.50. Python-3.14.3
 RUN --mount=type=tmpfs \
-    --mount=from=sources,source=Python-3.10.2.tar.xz,target=Python-3.10.2.tar.xz \
-    --mount=from=sources,source=python-3.10.2-docs-html.tar.bz2,target=python-3.10.2-docs-html.tar.bz2 \
+    --mount=from=sources,source=Python-3.14.3.tar.xz,target=Python-3.14.3.tar.xz \
+    --mount=from=sources,source=python-3.14.3-docs-html.tar.bz2,target=python-3.14.3-docs-html.tar.bz2 \
 <<'EOT' $SH
-    tar -xf Python-3.10.2.tar.xz
-    cd Python-3.10.2
+    tar -xf Python-3.14.3.tar.xz
+    cd Python-3.14.3
     ./configure --prefix=/usr        \
                 --enable-shared      \
                 --with-system-expat  \
@@ -1888,12 +1888,12 @@ RUN --mount=type=tmpfs \
                 --enable-optimizations
     make
     make install
-    install -v -dm755 /usr/share/doc/python-3.10.2/html
+    install -v -dm755 /usr/share/doc/python-3.14.3/html
     tar --strip-components=1  \
         --no-same-owner       \
         --no-same-permissions \
-        -C /usr/share/doc/python-3.10.2/html \
-        -xvf ../python-3.10.2-docs-html.tar.bz2
+        -C /usr/share/doc/python-3.14.3/html \
+        -xvf ../python-3.14.3-docs-html.tar.bz2
 EOT
 
 # 8.51. Ninja-1.10.2
@@ -1921,10 +1921,10 @@ EOT
 
 # 8.52. Meson-0.61.1
 RUN --mount=type=tmpfs \
-    --mount=from=sources,source=meson-0.61.1.tar.gz,target=meson-0.61.1.tar.gz \
+    --mount=from=sources,source=meson-1.10.1.tar.gz,target=meson-1.10.1.tar.gz \
 <<'EOT' $SH
-    tar -xf meson-0.61.1.tar.gz
-    cd meson-0.61.1
+    tar -xf meson-1.10.1.tar.gz
+    cd meson-1.10.1
     python3 setup.py build
     python3 setup.py install --root=dest
     cp -rv dest/* /
@@ -2509,10 +2509,10 @@ EOT
 
 # 10.3. Linux-5.16.9
 RUN --mount=type=tmpfs \
-    --mount=from=sources,source=linux-5.16.9.tar.xz,target=linux-5.16.9.tar.xz \
+    --mount=from=sources,source=linux-6.18.10.tar.xz,target=linux-6.18.10.tar.xz \
 <<'EOT' $SH
-    tar -xf linux-5.16.9.tar.xz
-    cd linux-5.16.9
+    tar -xf linux-6.18.10.tar.xz
+    cd linux-6.18.10
     make mrproper
     make defconfig
     # Edit required flags
@@ -2577,8 +2577,8 @@ EOT2
     cp -iv System.map /boot/System.map-5.16.9
     cp -iv .config /boot/config-5.16.9
     # Install documentation
-    install -d /usr/share/doc/linux-5.16.9
-    cp -r Documentation/* /usr/share/doc/linux-5.16.9
+    install -d /usr/share/doc/linux-6.18.10
+    cp -r Documentation/* /usr/share/doc/linux-6.18.10
     # 10.3.2. Configuring Linux Module Load Order
     install -v -m755 -d /etc/modprobe.d
     echo 'install ohci_hcd /sbin/modprobe ehci_hcd ; /sbin/modprobe -i ohci_hcd ; true' >> /etc/modprobe.d/usb.conf
