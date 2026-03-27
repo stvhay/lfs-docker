@@ -134,8 +134,8 @@ FROM scratch AS sources
 
 # NOTE: Even if this list is updated, BuildKit will only rebuild layers that use the updated files
 ARG SOURCES_MIRROR
-ADD --chmod=744 ${SOURCES_MIRROR:-https://download.savannah.gnu.org/releases/acl/}acl-2.3.2.tar.xz .
-ADD --chmod=744 ${SOURCES_MIRROR:-https://download.savannah.gnu.org/releases/attr/}attr-2.5.2.tar.gz .
+ADD --chmod=744 ${SOURCES_MIRROR:-https://mirror.rabisu.com/mirrors/savannah/acl/}acl-2.3.2.tar.xz .
+ADD --chmod=744 ${SOURCES_MIRROR:-https://mirror.rabisu.com/mirrors/savannah/attr/}attr-2.5.2.tar.gz .
 ADD --chmod=744 ${SOURCES_MIRROR:-https://ftpmirror.gnu.org/gnu/autoconf/}autoconf-2.72.tar.xz .
 ADD --chmod=744 ${SOURCES_MIRROR:-https://ftpmirror.gnu.org/gnu/automake/}automake-1.18.1.tar.xz .
 ADD --chmod=744 ${SOURCES_MIRROR:-https://ftpmirror.gnu.org/gnu/bash/}bash-5.3.tar.gz .
@@ -178,12 +178,12 @@ ADD --chmod=744 ${SOURCES_MIRROR:-https://github.com/libffi/libffi/releases/down
 ADD --chmod=744 ${SOURCES_MIRROR:-https://pypi.org/packages/source/f/flit_core/}flit_core-3.12.0.tar.gz .
 ADD --chmod=744 ${SOURCES_MIRROR:-https://github.com/lz4/lz4/releases/download/v1.10.0/}lz4-1.10.0.tar.gz .
 ADD --chmod=744 ${SOURCES_MIRROR:-https://github.com/besser82/libxcrypt/releases/download/v4.5.2/}libxcrypt-4.5.2.tar.xz .
-ADD --chmod=744 ${SOURCES_MIRROR:-https://download.savannah.gnu.org/releases/libpipeline/}libpipeline-1.5.8.tar.gz .
+ADD --chmod=744 ${SOURCES_MIRROR:-https://mirror.accum.se/mirror/gnu.org/savannah/libpipeline/}libpipeline-1.5.8.tar.gz .
 ADD --chmod=744 ${SOURCES_MIRROR:-https://ftpmirror.gnu.org/gnu/libtool/}libtool-2.5.4.tar.xz .
 ADD --chmod=744 ${SOURCES_MIRROR:-https://www.kernel.org/pub/linux/kernel/v6.x/}linux-6.18.10.tar.xz .
 ADD --chmod=744 ${SOURCES_MIRROR:-https://ftpmirror.gnu.org/gnu/m4/}m4-1.4.21.tar.xz .
 ADD --chmod=744 ${SOURCES_MIRROR:-https://ftpmirror.gnu.org/gnu/make/}make-4.4.1.tar.gz .
-ADD --chmod=744 ${SOURCES_MIRROR:-https://download.savannah.gnu.org/releases/man-db/}man-db-2.13.1.tar.xz .
+ADD --chmod=744 ${SOURCES_MIRROR:-https://nongnu.niranjan.co/man-db/}man-db-2.13.1.tar.xz .
 ADD --chmod=744 ${SOURCES_MIRROR:-https://www.kernel.org/pub/linux/docs/man-pages/}man-pages-6.17.tar.xz .
 ADD --chmod=744 ${SOURCES_MIRROR:-https://pypi.org/packages/source/M/MarkupSafe/}markupsafe-3.0.3.tar.gz .
 ADD --chmod=744 ${SOURCES_MIRROR:-https://github.com/mesonbuild/meson/releases/download/1.10.1/}meson-1.10.1.tar.gz .
@@ -1795,12 +1795,14 @@ RUN --mount=type=tmpfs \
     install -v -m644 doc/*.{html,css} /usr/share/doc/expat-2.7.4
 EOT
 
-# 8.39. Inetutils-2.2
+# 8.39. Inetutils-2.7
 RUN --mount=type=tmpfs \
     --mount=from=sources,source=inetutils-2.7.tar.gz,target=inetutils-2.7.tar.gz \
 <<'EOT' $SH
     tar -xf inetutils-2.7.tar.gz
     cd inetutils-2.7
+    # Fix for GCC 14+ implicit function declaration
+    sed -i 's/def HAVE_TERMCAP_TGETENT/ 1/' telnet/telnet.c
     ./configure --prefix=/usr        \
                 --bindir=/usr/bin    \
                 --localstatedir=/var \
@@ -1923,25 +1925,6 @@ RUN --mount=type=tmpfs \
     make MANSUFFIX=ssl install
     mv -v /usr/share/doc/openssl /usr/share/doc/openssl-3.6.1
     cp -vfr doc/* /usr/share/doc/openssl-3.6.1
-EOT
-
-# 8.60. Kmod-34.2
-RUN --mount=type=tmpfs \
-    --mount=from=sources,source=kmod-34.2.tar.xz,target=kmod-34.2.tar.xz \
-<<'EOT' $SH
-    tar -xf kmod-34.2.tar.xz
-    cd kmod-34.2
-    mkdir -p build
-    cd       build
-    meson setup --prefix=/usr     \
-                --buildtype=release \
-                -D manpages=false
-    ninja
-    ninja install
-    for target in depmod insmod modinfo modprobe rmmod; do \
-        ln -sfv ../bin/kmod /usr/sbin/$target || exit 1; \
-    done
-    ln -sfv kmod /usr/bin/lsmod
 EOT
 
 # 8.50. Libelf from Elfutils-0.194
@@ -2091,6 +2074,25 @@ RUN --mount=type=tmpfs \
     install -vDm644 data/shell-completions/zsh/_meson /usr/share/zsh/site-functions/_meson
 EOT
 
+# 8.60. Kmod-34.2
+RUN --mount=type=tmpfs \
+    --mount=from=sources,source=kmod-34.2.tar.xz,target=kmod-34.2.tar.xz \
+<<'EOT' $SH
+    tar -xf kmod-34.2.tar.xz
+    cd kmod-34.2
+    mkdir -p build
+    cd       build
+    meson setup --prefix=/usr     \
+                --buildtype=release \
+                -D manpages=false
+    ninja
+    ninja install
+    for target in depmod insmod modinfo modprobe rmmod; do \
+        ln -sfv ../bin/kmod /usr/sbin/$target || exit 1; \
+    done
+    ln -sfv kmod /usr/bin/lsmod
+EOT
+
 # 8.53. Coreutils-9.10
 RUN --mount=type=tmpfs \
     --mount=from=sources,source=coreutils-9.10.tar.xz,target=coreutils-9.10.tar.xz \
@@ -2099,10 +2101,10 @@ RUN --mount=type=tmpfs \
     tar -xf coreutils-9.10.tar.xz
     cd coreutils-9.10
     patch -Np1 -i ../coreutils-9.10-i18n-1.patch
-    autoreconf -fiv
+    autoreconf -fv
+    automake -af
     FORCE_UNSAFE_CONFIGURE=1 ./configure \
-                --prefix=/usr            \
-                --enable-no-install-program=kill,uptime
+                --prefix=/usr
     make
     if $ENABLE_TESTS; then \
         make NON_ROOT_USERNAME=tester check-root
@@ -2170,19 +2172,20 @@ RUN --mount=type=tmpfs \
     make install
 EOT
 
-# 8.59. GRUB-2.06
+# 8.66. GRUB-2.14
 RUN --mount=type=tmpfs \
     --mount=from=sources,source=grub-2.14.tar.xz,target=grub-2.14.tar.xz \
 <<'EOT' $SH
     tar -xf grub-2.14.tar.xz
     cd grub-2.14
+    # Fix bug introduced in grub-2.14
+    sed 's/--image-base/--nonexist-linker-option/' -i configure
     ./configure --prefix=/usr          \
                 --sysconfdir=/etc      \
                 --disable-efiemu       \
                 --disable-werror
     make
     make install
-    mv -v /etc/bash_completion.d/grub /usr/share/bash-completion/completions
 EOT
 
 # TODO: The GRUB images used later to make the bootable ISO
@@ -2416,24 +2419,17 @@ RUN --mount=type=tmpfs \
     systemctl preset-all
 EOT
 
-# 8.72. D-Bus-1.12.20
+# 8.79. D-Bus-1.16.2
 RUN --mount=type=tmpfs \
     --mount=from=sources,source=dbus-1.16.2.tar.xz,target=dbus-1.16.2.tar.xz \
 <<'EOT' $SH
     tar -xf dbus-1.16.2.tar.xz
     cd dbus-1.16.2
-    ./configure --prefix=/usr                        \
-                --sysconfdir=/etc                    \
-                --localstatedir=/var                 \
-                --disable-static                     \
-                --disable-doxygen-docs               \
-                --disable-xml-docs                   \
-                --docdir=/usr/share/doc/dbus-1.16.2 \
-                --with-console-auth-dir=/run/console \
-                --with-system-pid-file=/run/dbus/pid \
-                --with-system-socket=/run/dbus/system_bus_socket
-    make
-    make install
+    mkdir -p build
+    cd       build
+    meson setup --prefix=/usr --buildtype=release --wrap-mode=nofallback ..
+    ninja
+    ninja install
     ln -sfv /etc/machine-id /var/lib/dbus
 EOT
 
@@ -2456,12 +2452,12 @@ RUN --mount=type=tmpfs \
     make install
 EOT
 
-# 8.74. Procps-ng-3.3.17
+# 8.82. Procps-ng-4.0.6
 RUN --mount=type=tmpfs \
     --mount=from=sources,source=procps-ng-4.0.6.tar.xz,target=procps-ng-4.0.6.tar.xz \
 <<'EOT' $SH
     tar -xf procps-ng-4.0.6.tar.xz
-    cd procps-4.0.6
+    cd procps-ng-4.0.6
     ./configure --prefix=/usr                            \
                 --docdir=/usr/share/doc/procps-ng-4.0.6 \
                 --disable-static                         \
@@ -2528,46 +2524,52 @@ RUN --mount=type=tmpfs \
     install-info --dir-file=/usr/share/info/dir /usr/share/info/com_err.info
 EOT
 
-# 8.78. Stripping
+# 8.88. Stripping
 RUN <<'EOT' $SH
-save_usrlib="$(cd /usr/lib; ls ld-linux*)
+save_usrlib="$(cd /usr/lib; ls ld-linux*[^g])
              libc.so.6
              libthread_db.so.1
-             libstdc++.so.6.0.29
+             libquadmath.so.0.0.0
+             libstdc++.so.6.0.34
              libitm.so.1.0.0
              libatomic.so.1.2.0"
 
 cd /usr/lib
 
 for LIB in $save_usrlib; do
+    # Skip if file doesn't exist (some libs are arch-specific)
+    [ -f "$LIB" ] || continue
     objcopy --only-keep-debug $LIB $LIB.dbg
     cp $LIB /tmp/$LIB
-    strip --strip-unneeded /tmp/$LIB
+    strip --strip-debug /tmp/$LIB
     objcopy --add-gnu-debuglink=$LIB.dbg /tmp/$LIB
     install -vm755 /tmp/$LIB /usr/lib
     rm /tmp/$LIB
 done
 
 online_usrbin="bash find strip"
-online_usrlib="libbfd-2.46.so
+online_usrlib="libbfd-2.46.0.20260210.so
+               libsframe.so.3.0.0
                libhistory.so.8.3
                libncursesw.so.6.6
                libm.so.6
                libreadline.so.8.3
-               libz.so.1.3
+               libz.so.1.3.2
+               libzstd.so.1.5.7
                $(cd /usr/lib; find libnss*.so* -type f)"
 
 for BIN in $online_usrbin; do
     cp /usr/bin/$BIN /tmp/$BIN
-    strip --strip-unneeded /tmp/$BIN
+    strip --strip-debug /tmp/$BIN
     install -vm755 /tmp/$BIN /usr/bin
     rm /tmp/$BIN
 done
 
 for LIB in $online_usrlib; do
+    # Skip if file doesn't exist
+    [ -f "$LIB" ] || continue
     cp /usr/lib/$LIB /tmp/$LIB
-    # Some files may have unrecognized format so we need to ignore some errors
-    strip --strip-unneeded /tmp/$LIB || true
+    strip --strip-debug /tmp/$LIB
     install -vm755 /tmp/$LIB /usr/lib
     rm /tmp/$LIB
 done
@@ -2578,7 +2580,7 @@ for i in $(find /usr/lib -type f -name \*.so* ! -name \*dbg) \
     case "$online_usrbin $online_usrlib $save_usrlib" in
         *$(basename $i)* )
             ;;
-        * ) strip --strip-unneeded $i || true
+        * ) strip --strip-debug $i || true
             ;;
     esac
 done
@@ -2713,15 +2715,15 @@ EOT2
     make modules_install
     case $LFS_ARCH in
         x86_64)
-            cp -iv arch/x86/boot/bzImage /boot/vmlinuz-5.16.9
+            cp -iv arch/x86/boot/bzImage /boot/vmlinuz-6.18.10
             ;;
         aarch64)
             # TODO: not sure why the final kernel image is named Image instead of bzImage
-            cp -iv arch/arm64/boot/Image /boot/vmlinuz-5.16.9
+            cp -iv arch/arm64/boot/Image /boot/vmlinuz-6.18.10
             ;;
     esac
-    cp -iv System.map /boot/System.map-5.16.9
-    cp -iv .config /boot/config-5.16.9
+    cp -iv System.map /boot/System.map-6.18.10
+    cp -iv .config /boot/config-6.18.10
     # Install documentation
     install -d /usr/share/doc/linux-6.18.10
     cp -r Documentation/* /usr/share/doc/linux-6.18.10

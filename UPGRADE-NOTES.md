@@ -113,6 +113,9 @@ Affected packages:
 ### GMP
 - Added `sed -i '/long long t1;/,+1s/()/(...)/' configure` for GCC 15 compatibility
 
+### Inetutils
+- Added `sed -i 's/def HAVE_TERMCAP_TGETENT/ 1/' telnet/telnet.c` for GCC 14+ implicit function declaration fix
+
 ### Shadow
 - Added `--with-{b,yes}crypt` for bcrypt/yescrypt support
 - Added `--without-libbsd` to use internal readpassphrase
@@ -160,6 +163,24 @@ Affected packages:
 ### Perl
 - Updated version paths from 5.34 to 5.42
 
+### D-Bus
+- Changed from autoconf to meson build system
+- Use `meson setup --prefix=/usr --buildtype=release --wrap-mode=nofallback` and `ninja`
+
+### Coreutils
+- Changed `autoreconf -fiv` to `autoreconf -fv` followed by `automake -af`
+- Removed `--enable-no-install-program=kill,uptime` from configure
+
+### GRUB
+- Added `sed 's/--image-base/--nonexist-linker-option/' -i configure` before build
+- Removed `mv` for bash completion (now installed to correct location by default)
+
+### Stripping (section 8.88)
+- Updated library versions for GCC 15.2.0 (libstdc++.so.6.0.34, etc.)
+- Added `libsframe.so.3.0.0`, `libzstd.so.1.5.7` to online_usrlib
+- Changed `--strip-unneeded` to `--strip-debug`
+- Made script resilient to missing arch-specific libraries (e.g., libquadmath on arm64)
+
 If other builds fail, check the LFS 13.0 book for instruction changes:
 https://www.linuxfromscratch.org/lfs/view/13.0-systemd/
 
@@ -173,3 +194,11 @@ https://www.linuxfromscratch.org/lfs/view/13.0-systemd/
 6. **Tcl source URL format changed** - Now uses `sourceforge.net/projects/tcl/files/.../download` suffix instead of `downloads.sourceforge.net/tcl/` due to Docker ADD redirect issues
 7. **Tcl bundled packages updated** - tdbc changed from 1.1.3 to 1.1.12, itcl changed from 4.2.2 to 4.3.4
 8. **Expect source URL format changed** - Same SourceForge redirect issue as Tcl
+9. **Savannah download URLs redirect** - `download.savannah.gnu.org` URLs redirect and break Docker ADD; use direct mirror URLs for libpipeline, man-db, acl, attr
+10. **Kmod now requires meson** - Must be built after meson/ninja in the build order
+11. **D-Bus switched to meson** - No longer uses autoconf; use `meson setup` and `ninja`
+12. **procps-ng directory name** - Tarball extracts to `procps-ng-4.0.6` not `procps-4.0.6`
+13. **Coreutils requires automake -af** - After autoreconf, must run `automake -af` before configure
+14. **GRUB 2.14 needs sed fix** - `sed 's/--image-base/--nonexist-linker-option/' -i configure` before build
+15. **libstdc++ version changed** - GCC 15.2 provides libstdc++.so.6.0.34 instead of 6.0.29
+16. **libquadmath is x86_64 only** - Not present on arm64, stripping script needs to handle missing files
