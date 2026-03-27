@@ -1,6 +1,6 @@
 # lfs-docker
 
-Dockerfile to build Linux From Scratch 11.1-systemd, supporting x86_64 and aarch64/arm64.
+Dockerfile to build Linux From Scratch 13.0-systemd, supporting x86_64 and aarch64/arm64.
 
 ## Build
 
