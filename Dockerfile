@@ -120,7 +120,7 @@ ARG BUSYBOX_ARCH
 # COPY --chmod=744 sources/shadow-4.19.3.tar.xz .
 # COPY --chmod=744 sources/sysklogd-1.5.1.tar.gz .
 # COPY --chmod=744 sources/systemd-259.1.tar.gz .
-# COPY --chmod=744 sources/systemd-man-pages-250.tar.xz .
+# COPY --chmod=744 sources/systemd-man-pages-259.1.tar.xz .
 # COPY --chmod=744 sources/sysvinit-3.01.tar.xz .
 # COPY --chmod=744 sources/tar-1.35.tar.xz .
 # COPY --chmod=744 sources/tcl8.6.17-src.tar.gz .
@@ -134,15 +134,12 @@ ARG BUSYBOX_ARCH
 # COPY --chmod=744 sources/xz-5.8.2.tar.xz .
 # COPY --chmod=744 sources/zlib-1.3.2.tar.xz .
 # COPY --chmod=744 sources/zstd-1.5.7.tar.gz .
-# COPY --chmod=744 sources/binutils-2.46.0-lto_fix-1.patch .
 # COPY --chmod=744 sources/bzip2-1.0.8-install_docs-1.patch .
 # COPY --chmod=744 sources/coreutils-9.10-i18n-1.patch .
-# COPY --chmod=744 sources/coreutils-9.10-chmod_fix-1.patch .
-# COPY --chmod=744 sources/glibc-2.43-fhs-1.patch .
+# COPY --chmod=744 sources/expect-5.45.4-gcc15-1.patch .
+# COPY --chmod=744 sources/glibc-2.42-upstream_fixes-1.patch .
+# COPY --chmod=744 sources/glibc-fhs-1.patch .
 # COPY --chmod=744 sources/kbd-2.9.0-backspace-1.patch .
-# COPY --chmod=744 sources/perl-5.42.0-upstream_fixes-1.patch .
-# COPY --chmod=744 sources/sysvinit-3.01-consolidated-1.patch .
-# COPY --chmod=744 sources/systemd-259.1-upstream_fixes-1.patch .
 # COPY --chmod=744 sources/busybox-${BUSYBOX_ARCH} .
 
 # NOTE: Even if this list is updated, BuildKit will only rebuild layers that use the updated files
@@ -217,7 +214,7 @@ ADD --chmod=744 ${SOURCES_MIRROR:-https://ftp.gnu.org/gnu/sed/}sed-4.9.tar.xz .
 ADD --chmod=744 ${SOURCES_MIRROR:-https://github.com/shadow-maint/shadow/releases/download/v4.11.1/}shadow-4.19.3.tar.xz .
 ADD --chmod=744 ${SOURCES_MIRROR:-https://www.infodrom.org/projects/sysklogd/download/}sysklogd-1.5.1.tar.gz .
 ADD --chmod=744 ${SOURCES_MIRROR:-https://github.com/systemd/systemd/archive/v250/}systemd-259.1.tar.gz .
-ADD --chmod=744 ${SOURCES_MIRROR:-https://anduin.linuxfromscratch.org/LFS/}systemd-man-pages-250.tar.xz .
+ADD --chmod=744 ${SOURCES_MIRROR:-https://anduin.linuxfromscratch.org/LFS/}systemd-man-pages-259.1.tar.xz .
 ADD --chmod=744 ${SOURCES_MIRROR:-https://download.savannah.gnu.org/releases/sysvinit/}sysvinit-3.01.tar.xz .
 ADD --chmod=744 ${SOURCES_MIRROR:-https://ftp.gnu.org/gnu/tar/}tar-1.35.tar.xz .
 ADD --chmod=744 ${SOURCES_MIRROR:-https://downloads.sourceforge.net/tcl/}tcl8.6.17-src.tar.gz .
@@ -230,16 +227,13 @@ ADD --chmod=744 ${SOURCES_MIRROR:-https://anduin.linuxfromscratch.org/LFS/}vim-9
 ADD --chmod=744 ${SOURCES_MIRROR:-https://cpan.metacpan.org/authors/id/T/TO/TODDR/}XML-Parser-2.47.tar.gz .
 ADD --chmod=744 ${SOURCES_MIRROR:-https://tukaani.org/xz/}xz-5.8.2.tar.xz .
 ADD --chmod=744 ${SOURCES_MIRROR:-https://zlib.net/}zlib-1.3.2.tar.xz .
-ADD --chmod=744 ${SOURCES_MIRROR:-https://github.com/facebook/zstd/releases/download/v1.5.2/}zstd-1.5.7.tar.gz .
-ADD --chmod=744 ${SOURCES_MIRROR:-https://www.linuxfromscratch.org/patches/lfs/11.1/}binutils-2.46.0-lto_fix-1.patch .
-ADD --chmod=744 ${SOURCES_MIRROR:-https://www.linuxfromscratch.org/patches/lfs/11.1/}bzip2-1.0.8-install_docs-1.patch .
-ADD --chmod=744 ${SOURCES_MIRROR:-https://www.linuxfromscratch.org/patches/lfs/11.1/}coreutils-9.10-i18n-1.patch .
-ADD --chmod=744 ${SOURCES_MIRROR:-https://www.linuxfromscratch.org/patches/lfs/11.1/}coreutils-9.10-chmod_fix-1.patch .
-ADD --chmod=744 ${SOURCES_MIRROR:-https://www.linuxfromscratch.org/patches/lfs/11.1/}glibc-2.43-fhs-1.patch .
-ADD --chmod=744 ${SOURCES_MIRROR:-https://www.linuxfromscratch.org/patches/lfs/11.1/}kbd-2.9.0-backspace-1.patch .
-ADD --chmod=744 ${SOURCES_MIRROR:-https://www.linuxfromscratch.org/patches/lfs/11.1/}perl-5.42.0-upstream_fixes-1.patch .
-ADD --chmod=744 ${SOURCES_MIRROR:-https://www.linuxfromscratch.org/patches/lfs/11.1/}sysvinit-3.01-consolidated-1.patch .
-ADD --chmod=744 ${SOURCES_MIRROR:-https://www.linuxfromscratch.org/patches/lfs/11.1/}systemd-259.1-upstream_fixes-1.patch .
+ADD --chmod=744 ${SOURCES_MIRROR:-https://github.com/facebook/zstd/releases/download/v1.5.7/}zstd-1.5.7.tar.gz .
+ADD --chmod=744 ${SOURCES_MIRROR:-https://www.linuxfromscratch.org/patches/lfs/13.0/}bzip2-1.0.8-install_docs-1.patch .
+ADD --chmod=744 ${SOURCES_MIRROR:-https://www.linuxfromscratch.org/patches/lfs/13.0/}coreutils-9.10-i18n-1.patch .
+ADD --chmod=744 ${SOURCES_MIRROR:-https://www.linuxfromscratch.org/patches/lfs/13.0/}expect-5.45.4-gcc15-1.patch .
+ADD --chmod=744 ${SOURCES_MIRROR:-https://www.linuxfromscratch.org/patches/lfs/13.0/}glibc-2.42-upstream_fixes-1.patch .
+ADD --chmod=744 ${SOURCES_MIRROR:-https://www.linuxfromscratch.org/patches/lfs/13.0/}glibc-fhs-1.patch .
+ADD --chmod=744 ${SOURCES_MIRROR:-https://www.linuxfromscratch.org/patches/lfs/13.0/}kbd-2.9.0-backspace-1.patch .
 ADD --chmod=744 ${SOURCES_MIRROR:-https://www.busybox.net/downloads/binaries/1.28.1-defconfig-multiarch/}busybox-${BUSYBOX_ARCH} .
 
 #################
@@ -384,7 +378,7 @@ EOT
 # 5.5. Glibc-2.35
 RUN --mount=type=tmpfs \
     --mount=from=sources,source=glibc-2.43.tar.xz,target=glibc-2.43.tar.xz \
-    --mount=from=sources,source=glibc-2.43-fhs-1.patch,target=glibc-2.43-fhs-1.patch \
+    --mount=from=sources,source=glibc-fhs-1.patch,target=glibc-fhs-1.patch \
 <<'EOT' $SH
     tar -xf glibc-2.43.tar.xz
     cd glibc-2.43
@@ -398,7 +392,7 @@ RUN --mount=type=tmpfs \
             ln -sfv ../lib/ld-linux-aarch64.so.1 $LFS/lib64/ld-lsb-aarch64.so.3
             ;;
     esac
-    patch -Np1 -i ../glibc-2.43-fhs-1.patch
+    patch -Np1 -i ../glibc-fhs-1.patch
     mkdir -v build
     cd build
     echo "rootsbindir=/usr/sbin" > configparms
@@ -993,15 +987,17 @@ RUN --mount=type=tmpfs \
     cp services protocols /etc
 EOT
 
-# 8.5. Glibc-2.35
+# 8.5. Glibc-2.43
 # TODO: make the result of `make check` more visible
 RUN --mount=type=tmpfs \
     --mount=from=sources,source=glibc-2.43.tar.xz,target=glibc-2.43.tar.xz \
-    --mount=from=sources,source=glibc-2.43-fhs-1.patch,target=glibc-2.43-fhs-1.patch \
+    --mount=from=sources,source=glibc-fhs-1.patch,target=glibc-fhs-1.patch \
+    --mount=from=sources,source=glibc-2.42-upstream_fixes-1.patch,target=glibc-2.42-upstream_fixes-1.patch \
 <<'EOT' $SH
     tar -xf glibc-2.43.tar.xz
     cd glibc-2.43
-    patch -Np1 -i ../glibc-2.43-fhs-1.patch
+    patch -Np1 -i ../glibc-fhs-1.patch
+    patch -Np1 -i ../glibc-2.42-upstream_fixes-1.patch
     mkdir -v build
     cd build
     echo "rootsbindir=/usr/sbin" > configparms
@@ -1271,9 +1267,11 @@ EOT
 # 8.16. Expect-5.45.4
 RUN --mount=type=tmpfs \
     --mount=from=sources,source=expect5.45.4.tar.gz,target=expect5.45.4.tar.gz \
+    --mount=from=sources,source=expect-5.45.4-gcc15-1.patch,target=expect-5.45.4-gcc15-1.patch \
 <<'EOT' $SH
     tar -xf expect5.45.4.tar.gz
     cd expect5.45.4
+    patch -Np1 -i ../expect-5.45.4-gcc15-1.patch
     ./configure --prefix=/usr                  \
                 --with-tcl=/usr/lib            \
                 --enable-shared                \
@@ -1303,15 +1301,13 @@ RUN --mount=type=tmpfs \
     if $ENABLE_TESTS; then make check; fi
 EOT
 
-# 8.18. Binutils-2.38
+# 8.18. Binutils-2.46.0
 # NOTE: skipping the PTY test here since we don't have any during docker build
 RUN --mount=type=tmpfs \
     --mount=from=sources,source=binutils-2.46.0.tar.xz,target=binutils-2.46.0.tar.xz \
-    --mount=from=sources,source=binutils-2.46.0-lto_fix-1.patch,target=binutils-2.46.0-lto_fix-1.patch \
 <<'EOT' $SH
     tar -xf binutils-2.46.0.tar.xz
     cd binutils-2.46.0
-    patch -Np1 -i ../binutils-2.46.0-lto_fix-1.patch
     case $LFS_ARCH in
         x86_64)
             sed -e '/R_386_TLS_LE /i \   || (TYPE) == R_386_TLS_IE \\' \
@@ -1723,14 +1719,12 @@ RUN --mount=type=tmpfs \
     make install
 EOT
 
-# 8.41. Perl-5.34.0
+# 8.41. Perl-5.42.0
 RUN --mount=type=tmpfs \
     --mount=from=sources,source=perl-5.42.0.tar.xz,target=perl-5.42.0.tar.xz \
-    --mount=from=sources,source=perl-5.42.0-upstream_fixes-1.patch,target=perl-5.42.0-upstream_fixes-1.patch \
 <<'EOT' $SH
     tar -xf perl-5.42.0.tar.xz
     cd perl-5.42.0
-    patch -Np1 -i ../perl-5.42.0-upstream_fixes-1.patch
     export BUILD_ZLIB=False
     export BUILD_BZIP2=0
     sh Configure -des                                         \
@@ -1932,16 +1926,14 @@ RUN --mount=type=tmpfs \
     install -vDm644 data/shell-completions/zsh/_meson /usr/share/zsh/site-functions/_meson
 EOT
 
-# 8.53. Coreutils-9.0
+# 8.53. Coreutils-9.10
 RUN --mount=type=tmpfs \
     --mount=from=sources,source=coreutils-9.10.tar.xz,target=coreutils-9.10.tar.xz \
     --mount=from=sources,source=coreutils-9.10-i18n-1.patch,target=coreutils-9.10-i18n-1.patch \
-    --mount=from=sources,source=coreutils-9.10-chmod_fix-1.patch,target=coreutils-9.10-chmod_fix-1.patch \
 <<'EOT' $SH
     tar -xf coreutils-9.10.tar.xz
     cd coreutils-9.10
     patch -Np1 -i ../coreutils-9.10-i18n-1.patch
-    patch -Np1 -i ../coreutils-9.10-chmod_fix-1.patch
     autoreconf -fiv
     FORCE_UNSAFE_CONFIGURE=1 ./configure \
                 --prefix=/usr            \
@@ -2233,15 +2225,13 @@ RUN --mount=type=tmpfs \
     python3 setup.py install --optimize=1
 EOT
 
-# 8.71. Systemd-250
+# 8.71. Systemd-259.1
 RUN --mount=type=tmpfs \
     --mount=from=sources,source=systemd-259.1.tar.gz,target=systemd-259.1.tar.gz \
-    --mount=from=sources,source=systemd-259.1-upstream_fixes-1.patch,target=systemd-259.1-upstream_fixes-1.patch \
-    --mount=from=sources,source=systemd-man-pages-250.tar.xz,target=systemd-man-pages-250.tar.xz \
+    --mount=from=sources,source=systemd-man-pages-259.1.tar.xz,target=systemd-man-pages-259.1.tar.xz \
 <<'EOT' $SH
     tar -xf systemd-259.1.tar.gz
     cd systemd-259.1
-    patch -Np1 -i ../systemd-259.1-upstream_fixes-1.patch
     sed -i -e 's/GROUP="render"/GROUP="video"/' \
         -e 's/GROUP="sgx", //' rules.d/50-udev-default.rules.in
     mkdir -p build
@@ -2266,7 +2256,7 @@ RUN --mount=type=tmpfs \
           ..
     ninja
     ninja install
-    tar -xf ../../systemd-man-pages-250.tar.xz --strip-components=1 -C /usr/share/man
+    tar -xf ../../systemd-man-pages-259.1.tar.xz --strip-components=1 -C /usr/share/man
     rm -rf /usr/lib/pam.d
     systemd-machine-id-setup
     systemctl preset-all
