@@ -92,3 +92,4 @@ https://www.linuxfromscratch.org/lfs/view/13.0-systemd/
 2. **PyPI package names are lowercase** - MarkupSafe and Jinja2 tarballs use lowercase names (markupsafe-3.0.3.tar.gz, jinja2-3.1.6.tar.gz)
 3. **glibc-2.42-upstream_fixes-1.patch not needed** - The design mentioned this patch but it's for glibc-2.42; LFS 13.0 uses glibc-2.43 which has fixes included
 4. **dbus tarball extension changed** - Now distributed as .tar.xz instead of .tar.gz
+5. **busybox source changed** - Now uses Alpine's busybox-static package instead of downloading from busybox.net (which has TLS timeout issues)
