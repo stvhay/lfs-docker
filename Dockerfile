@@ -132,7 +132,6 @@ ARG BUSYBOX_ARCH
 # COPY --chmod=744 sources/bzip2-1.0.8-install_docs-1.patch .
 # COPY --chmod=744 sources/coreutils-9.10-i18n-1.patch .
 # COPY --chmod=744 sources/expect-5.45.4-gcc15-1.patch .
-# COPY --chmod=744 sources/glibc-2.42-upstream_fixes-1.patch .
 # COPY --chmod=744 sources/glibc-fhs-1.patch .
 # COPY --chmod=744 sources/kbd-2.9.0-backspace-1.patch .
 # COPY --chmod=744 sources/busybox-${BUSYBOX_ARCH} .
@@ -220,7 +219,6 @@ ADD --chmod=744 ${SOURCES_MIRROR:-https://github.com/facebook/zstd/releases/down
 ADD --chmod=744 ${SOURCES_MIRROR:-https://www.linuxfromscratch.org/patches/lfs/13.0/}bzip2-1.0.8-install_docs-1.patch .
 ADD --chmod=744 ${SOURCES_MIRROR:-https://www.linuxfromscratch.org/patches/lfs/13.0/}coreutils-9.10-i18n-1.patch .
 ADD --chmod=744 ${SOURCES_MIRROR:-https://www.linuxfromscratch.org/patches/lfs/13.0/}expect-5.45.4-gcc15-1.patch .
-ADD --chmod=744 ${SOURCES_MIRROR:-https://www.linuxfromscratch.org/patches/lfs/13.0/}glibc-2.42-upstream_fixes-1.patch .
 ADD --chmod=744 ${SOURCES_MIRROR:-https://www.linuxfromscratch.org/patches/lfs/13.0/}glibc-fhs-1.patch .
 ADD --chmod=744 ${SOURCES_MIRROR:-https://www.linuxfromscratch.org/patches/lfs/13.0/}kbd-2.9.0-backspace-1.patch .
 ADD --chmod=744 ${SOURCES_MIRROR:-https://www.busybox.net/downloads/binaries/1.28.1-defconfig-multiarch/}busybox-${BUSYBOX_ARCH} .
@@ -981,12 +979,10 @@ EOT
 RUN --mount=type=tmpfs \
     --mount=from=sources,source=glibc-2.43.tar.xz,target=glibc-2.43.tar.xz \
     --mount=from=sources,source=glibc-fhs-1.patch,target=glibc-fhs-1.patch \
-    --mount=from=sources,source=glibc-2.42-upstream_fixes-1.patch,target=glibc-2.42-upstream_fixes-1.patch \
 <<'EOT' $SH
     tar -xf glibc-2.43.tar.xz
     cd glibc-2.43
     patch -Np1 -i ../glibc-fhs-1.patch
-    patch -Np1 -i ../glibc-2.42-upstream_fixes-1.patch
     mkdir -v build
     cd build
     echo "rootsbindir=/usr/sbin" > configparms

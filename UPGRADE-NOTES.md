@@ -65,7 +65,9 @@ LFS 13.0 includes these new packages that we did NOT add (scope limited to versi
 
 ### Added Patches
 - expect-5.45.4-gcc15-1.patch
-- glibc-2.42-upstream_fixes-1.patch
+
+### Patches NOT Added
+- glibc-2.42-upstream_fixes-1.patch (mentioned in changelog, but not in official patches list; applies to glibc-2.42, not needed for glibc-2.43)
 
 ## Build Instructions Not Updated
 
@@ -74,4 +76,6 @@ https://www.linuxfromscratch.org/lfs/view/13.0-systemd/
 
 ## Issues Found During Upgrade
 
-(Document any issues discovered during the upgrade here)
+1. **Expat moved from SourceForge to GitHub** - URL changed to https://github.com/libexpat/libexpat/releases/
+2. **PyPI package names are lowercase** - MarkupSafe and Jinja2 tarballs use lowercase names (markupsafe-3.0.3.tar.gz, jinja2-3.1.6.tar.gz)
+3. **glibc-2.42-upstream_fixes-1.patch not needed** - The design mentioned this patch but it's for glibc-2.42; LFS 13.0 uses glibc-2.43 which has fixes included
