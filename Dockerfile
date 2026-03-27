@@ -36,7 +36,8 @@ ARG MAKEFLAGS=-j8
 
 # Download source files from ${SOURCES_MIRROR}<file_name>
 # If the original download URLs in the LFS manual are desired, comment the following line
-ARG SOURCES_MIRROR=https://github.com/rod-lin/lfs-docker/raw/files/sources/
+# NOTE: Mirror disabled for LFS 13.0 - mirror only has LFS 11.1 packages
+# ARG SOURCES_MIRROR=https://github.com/rod-lin/lfs-docker/raw/files/sources/
 
 # Final bootable ISO image options
 ARG ISO_IMAGE_NAME=lfs-${LFS_ARCH}.iso
