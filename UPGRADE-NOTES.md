@@ -36,12 +36,17 @@ These packages were in LFS 11.1 but removed in LFS 13.0:
 |-----|-----|
 | pkg-config-0.29.2 | pkgconf-2.5.1 |
 
+## New Packages Added (Required)
+
+LFS 13.0 introduced packages that are required dependencies:
+
+- libxcrypt-4.5.2 (required by shadow - glibc 2.43 no longer includes libcrypt)
+
 ## New Packages NOT Added
 
 LFS 13.0 includes these new packages that we did NOT add (scope limited to version updates):
 
 - flit-core-3.12.0
-- libxcrypt-4.5.2
 - lz4-1.10.0
 - packaging-26.0
 - pcre2-10.47

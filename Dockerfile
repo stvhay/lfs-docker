@@ -175,6 +175,7 @@ ADD --chmod=744 ${SOURCES_MIRROR:-https://www.kernel.org/pub/linux/utils/kernel/
 ADD --chmod=744 ${SOURCES_MIRROR:-https://www.greenwoodsoftware.com/less/}less-692.tar.gz .
 ADD --chmod=744 ${SOURCES_MIRROR:-https://www.kernel.org/pub/linux/libs/security/linux-privs/libcap2/}libcap-2.77.tar.xz .
 ADD --chmod=744 ${SOURCES_MIRROR:-https://github.com/libffi/libffi/releases/download/v3.5.2/}libffi-3.5.2.tar.gz .
+ADD --chmod=744 ${SOURCES_MIRROR:-https://github.com/besser82/libxcrypt/releases/download/v4.5.2/}libxcrypt-4.5.2.tar.xz .
 ADD --chmod=744 ${SOURCES_MIRROR:-https://download.savannah.gnu.org/releases/libpipeline/}libpipeline-1.5.8.tar.gz .
 ADD --chmod=744 ${SOURCES_MIRROR:-https://ftpmirror.gnu.org/gnu/libtool/}libtool-2.5.4.tar.xz .
 ADD --chmod=744 ${SOURCES_MIRROR:-https://www.kernel.org/pub/linux/kernel/v6.x/}linux-6.18.10.tar.xz .
@@ -1469,7 +1470,25 @@ RUN --mount=type=tmpfs \
     make prefix=/usr lib=lib install
 EOT
 
-# 8.25. Shadow-4.11.1
+# 8.28. Libxcrypt-4.5.2
+RUN --mount=type=tmpfs \
+    --mount=from=sources,source=libxcrypt-4.5.2.tar.xz,target=libxcrypt-4.5.2.tar.xz \
+<<'EOT' $SH
+    tar -xf libxcrypt-4.5.2.tar.xz
+    cd libxcrypt-4.5.2
+    # Fix required by glibc-2.43 and later
+    sed -i '/strchr/s/const//' lib/crypt-{sm3,gost}-yescrypt.c
+    ./configure --prefix=/usr                \
+                --enable-hashes=strong,glibc \
+                --enable-obsolete-api=no     \
+                --disable-static             \
+                --disable-failure-tokens
+    make
+    if $ENABLE_TESTS; then make check; fi
+    make install
+EOT
+
+# 8.29. Shadow-4.19.3
 RUN --mount=type=tmpfs \
     --mount=from=sources,source=shadow-4.19.3.tar.xz,target=shadow-4.19.3.tar.xz \
 <<'EOT' $SH
