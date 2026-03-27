@@ -415,15 +415,17 @@ RUN --mount=type=tmpfs \
     make DESTDIR=$LFS install
 EOT
 
-# 6.2. M4-1.4.19
+# 6.2. M4-1.4.21
 RUN --mount=type=tmpfs \
     --mount=from=sources,source=m4-1.4.21.tar.xz,target=m4-1.4.21.tar.xz \
 <<'EOT' $SH
     tar -xf m4-1.4.21.tar.xz
     cd m4-1.4.21
+    # gl_cv_func_wctomb_retval=yes works around MB_LEN_MAX check issue with glibc 2.43
     ./configure --prefix=/usr   \
                 --host=$LFS_TGT \
-                --build=$(build-aux/config.guess)
+                --build=$(build-aux/config.guess) \
+                gl_cv_func_wctomb_retval=yes
     make
     make DESTDIR=$LFS install
 EOT
