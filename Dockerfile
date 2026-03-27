@@ -83,7 +83,7 @@ ARG BUSYBOX_ARCH
 # COPY --chmod=744 sources/grub-2.14.tar.xz .
 # COPY --chmod=744 sources/gzip-1.14.tar.xz .
 # COPY --chmod=744 sources/iana-etc-20260202.tar.gz .
-# COPY --chmod=744 sources/inetutils-2.7.tar.xz .
+# COPY --chmod=744 sources/inetutils-2.7.tar.gz .
 # COPY --chmod=744 sources/intltool-0.51.0.tar.gz .
 # COPY --chmod=744 sources/iproute2-6.18.0.tar.xz .
 # COPY --chmod=744 sources/Jinja2-3.1.6.tar.gz .
@@ -171,7 +171,7 @@ ADD --chmod=744 ${SOURCES_MIRROR:-https://ftp.gnu.org/gnu/groff/}groff-1.23.0.ta
 ADD --chmod=744 ${SOURCES_MIRROR:-https://ftp.gnu.org/gnu/grub/}grub-2.14.tar.xz .
 ADD --chmod=744 ${SOURCES_MIRROR:-https://ftp.gnu.org/gnu/gzip/}gzip-1.14.tar.xz .
 ADD --chmod=744 ${SOURCES_MIRROR:-https://github.com/Mic92/iana-etc/releases/download/20260202/}iana-etc-20260202.tar.gz .
-ADD --chmod=744 ${SOURCES_MIRROR:-https://ftp.gnu.org/gnu/inetutils/}inetutils-2.7.tar.xz .
+ADD --chmod=744 ${SOURCES_MIRROR:-https://ftp.gnu.org/gnu/inetutils/}inetutils-2.7.tar.gz .
 ADD --chmod=744 ${SOURCES_MIRROR:-https://launchpad.net/intltool/trunk/0.51.0/+download/}intltool-0.51.0.tar.gz .
 ADD --chmod=744 ${SOURCES_MIRROR:-https://www.kernel.org/pub/linux/utils/net/iproute2/}iproute2-6.18.0.tar.xz .
 ADD --chmod=744 ${SOURCES_MIRROR:-https://files.pythonhosted.org/packages/source/J/Jinja2/}Jinja2-3.1.6.tar.gz .
@@ -1677,9 +1677,9 @@ EOT
 
 # 8.39. Inetutils-2.2
 RUN --mount=type=tmpfs \
-    --mount=from=sources,source=inetutils-2.7.tar.xz,target=inetutils-2.7.tar.xz \
+    --mount=from=sources,source=inetutils-2.7.tar.gz,target=inetutils-2.7.tar.gz \
 <<'EOT' $SH
-    tar -xf inetutils-2.7.tar.xz
+    tar -xf inetutils-2.7.tar.gz
     cd inetutils-2.7
     ./configure --prefix=/usr        \
                 --bindir=/usr/bin    \
