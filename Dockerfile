@@ -386,7 +386,8 @@ RUN --mount=type=tmpfs \
         --prefix=/usr                      \
         --host=$LFS_TGT                    \
         --build=$(../scripts/config.guess) \
-        --enable-kernel=3.2                \
+        --disable-nscd                     \
+        --enable-kernel=5.4                \
         --with-headers=$LFS/usr/include    \
         libc_cv_slibdir=/usr/lib
     make
@@ -421,11 +422,12 @@ RUN --mount=type=tmpfs \
 <<'EOT' $SH
     tar -xf m4-1.4.21.tar.xz
     cd m4-1.4.21
-    # gl_cv_func_wctomb_retval=yes works around MB_LEN_MAX check issue with glibc 2.43
+    # Workaround for MB_LEN_MAX mismatch between host and target during cross-compilation
+    # glibc 2.43 uses MB_LEN_MAX=32, ensure the target headers are used
     ./configure --prefix=/usr   \
                 --host=$LFS_TGT \
                 --build=$(build-aux/config.guess) \
-                gl_cv_func_wctomb_retval=yes
+                CFLAGS="-isystem $LFS/usr/include"
     make
     make DESTDIR=$LFS install
 EOT
